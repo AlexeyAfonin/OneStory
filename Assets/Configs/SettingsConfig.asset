@@ -15,7 +15,7 @@ MonoBehaviour:
   SettingsVariables:
     Sounds: 50
     Music: 50
-    Sensitivity: 100
+    Sensitivity: 50
     ControllersKeys:
       Forward:
         Name: Forward

@@ -8,5 +8,14 @@ namespace OneStory.Core.Utils
             Enemy = 1,
             NPC = 2,
         }
+
+        public enum CharacterAnimations
+        {
+            Idle = 0,
+            Walk = 1,
+            Attack = 2,
+            Hit = 3,
+            Dying = 4,
+        }
     }
 }
