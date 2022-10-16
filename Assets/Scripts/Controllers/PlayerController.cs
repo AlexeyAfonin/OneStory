@@ -6,6 +6,7 @@ using UnityEngine.AI;
 using static OneStory.Core.Utils.Enums;
 using UCharacterController = UnityEngine.CharacterController;
 
+[RequireComponent(typeof(UCharacterController))]
 public sealed class PlayerController : CharacterController
 {
     [Space(10f)]
