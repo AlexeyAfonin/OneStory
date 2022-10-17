@@ -7,12 +7,12 @@ using UnityEngine;
 namespace DialogueSystem.SO
 {
     [CreateAssetMenu(fileName = "Dialogue", menuName = "OneStory/DialogSystem/Dialogue", order = 1)]
-    public class DialogueSO : ScriptableObject, IDialogue
+    public sealed class DialogueSO : ScriptableObject, IDialogue
     {
         [SerializeField] private string speaker;
-        [SerializeField] private Replica[] replicas;
+        [SerializeField] private DialogueReplicaStructure[] replicas;
 
         public string Speaker { get => speaker; set => speaker = value; }
-        public Replica[] Replicas { get => replicas; set => replicas = value; }
+        public DialogueReplicaStructure[] Replicas { get => replicas; set => replicas = value; }
     }
 }

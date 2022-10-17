@@ -2,7 +2,7 @@ namespace DialogueSystem.Core
 {
     public class DialogueEnums
     {
-        public enum StateDialogueGroup
+        public enum StatusDialogueGroup
         {
             None = 0,
             Start = 1,

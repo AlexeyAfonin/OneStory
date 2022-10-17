@@ -9,10 +9,10 @@ namespace DialogueSystem.SO
     [CreateAssetMenu(fileName = "DialogueGroup", menuName = "OneStory/DialogSystem/DialogueGroup", order = 2)]
     public class DialogueGroupSO : ScriptableObject
     {
-        [SerializeField] private StateDialogueGroup typeGroup;
+        [SerializeField] private StatusDialogueGroup statusGroup;
         [SerializeField] private DialogueSO[] dialoguesSO;
 
-        public StateDialogueGroup TypeGroup => typeGroup;
+        public StatusDialogueGroup StatusGroup => statusGroup;
         public DialogueSO[] Dialogues => dialoguesSO;
 
         public DialogueSO GetDialogue(string speaker) =>

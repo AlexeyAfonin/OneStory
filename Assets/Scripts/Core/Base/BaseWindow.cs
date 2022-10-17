@@ -9,10 +9,22 @@ namespace Core.Base
     {
         [SerializeField] protected GameObject panel;
 
-        public virtual void Show() =>
-            panel.SetActive(true);
+        protected bool _isVisiable;
+
+        public bool IsVisiable 
+        {
+            get => _isVisiable;
+            protected set
+            {
+                _isVisiable = value;
+                panel.SetActive(value);
+            }
+        }
+
+        public virtual void Show() => 
+            IsVisiable = true;
 
         public virtual void Hide() =>
-            panel.SetActive(false);
+            IsVisiable = false;
     }
 }

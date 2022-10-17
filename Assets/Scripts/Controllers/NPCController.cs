@@ -26,9 +26,6 @@ public class NPCController : CharacterController
         if (other.TryGetComponent<PlayerController>(out var player))
         {
             HelpWindow.Instance.ShowPrompt($"Нажмите E чтобы поговорить с {Name}");
-
-            DialogueSystemController.Instance.AddDialogue(dialogue);
-
             player.IsCanInteract = true;
             player.DialogueWithOther = dialogue;
         }
@@ -42,9 +39,9 @@ public class NPCController : CharacterController
             {
                 var cameraController = CameraController.Instance;
 
-                if (cameraController.MainCamera.State == StateCamera.Unfreeze)
+                if (cameraController.MainCamera.State == StateCamera.Freeze && 
+                    (cameraController.MainCamera.Camera.transform.position != dialogueCameraViewPosition.position))
                 {
-                    cameraController.FreezeCamera();
                     cameraController.SetCameraPosition(dialogueCameraViewPosition.position, dialogueCameraViewPosition.rotation);
                 }
             }
@@ -59,12 +56,6 @@ public class NPCController : CharacterController
 
             player.IsCanInteract = false;
             player.DialogueWithOther = null;
-
-            var cameraController = CameraController.Instance;
-            if (cameraController.MainCamera.State == StateCamera.Freeze)
-            {
-                cameraController.UnfreezeCamera();
-            }
         }
     }
 }

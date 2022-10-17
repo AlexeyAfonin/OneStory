@@ -1,7 +1,6 @@
 using DialogueSystem;
 using DialogueSystem.SO;
-using QuestSystem;
-using QuestSystem.SO;
+using DialogueSystem.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,8 +15,6 @@ public sealed class PlayerController : CharacterController
     [SerializeField] private Transform cinemachineCamera;
 
     private UCharacterController _controller;
-
-    private QuestSO _activeQuest;
 
     private bool _isMoving;
 
@@ -55,7 +52,7 @@ public sealed class PlayerController : CharacterController
 
     protected override void FixedUpdate()
     {
-        if (!IsWaitAnim)
+        if (!IsWaitAnim && !DialogueWindow.Instance.IsVisiable)
         {
             Move();
         }
@@ -106,22 +103,12 @@ public sealed class PlayerController : CharacterController
         base.TakeDamage(damage);
         _characterAnimator.PlayAnimation(CharacterAnimations.Hit);
     }
-
-    public void GetQuest()
-    {
-        //_activeQuest = QuestsSystemController.Instance.Quests
-    }
     
     private void Control()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             UnlockMouse();
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            //TakeDamage(10);
         }
 
         if (!IsWaitAnim)
@@ -136,7 +123,7 @@ public sealed class PlayerController : CharacterController
                 if (DialogueWithOther != null)
                 {
                     _state = CharacterState.Interacts;
-                    DialogueSystemController.Instance.ShowDialogue(DialogueWithOther.NameContainer);
+                    DialogueSystemController.Instance.Dialogue(DialogueWithOther);
                 }
             }
         }

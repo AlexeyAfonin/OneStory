@@ -1,50 +1,56 @@
 using Core.Utils;
 using DialogueSystem.Core;
 using DialogueSystem.SO;
+using DialogueSystem.Structures;
 using DialogueSystem.UI;
+using QuestSystem;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static DialogueSystem.Core.DialogueEnums;
+using static QuestSystem.Base.QuestEnums;
 
 namespace DialogueSystem
 {
     [AddComponentMenu(menuName: "DialogueSystem/Controller/DialogueSystemContoller", order: 1)]
     public sealed class DialogueSystemController : MonobehSingleton<DialogueSystemController>
     {
+        #region Fields
         [SerializeField] private DialogueWindow dialogueWindow;
         [Space(10f)]
-        [SerializeField] private List<DialogueContainer> dialogues;
+        [SerializeField] private List<DialogueStateContainer> dialogues;
 
-        public List<DialogueContainer> Dialogues => dialogues;
+        private DialogueStateContainer _currentDialogue;
+        private DialogueGroupSO _group;
+        private DialogueSO[] _dialogues;
+        private DialogueSO _activeDialogue;
+        private DialogueReplicaStructure _activeReplica;
 
-        private DialogueContainer _currentDialogue;
+        private StatusDialogueGroup _activeStateDialogueGroup = StatusDialogueGroup.None;
 
-        public void AddDialogue(DialogueContainerSO dialogue)
+        private int _indexActiveSpeaker = 0;
+        private int _indexActiveReplica = 0;
+        #endregion
+
+        /// <summary>
+        /// Начинает/продолжает входящий диалог из диалога-контейнера
+        /// </summary>
+        /// <param name="container">Диалог-контейнер</param>
+        public void Dialogue(DialogueContainerSO container)
         {
-            bool isNewDialogue = dialogues.FindAll(d => d.Container == dialogue).Count() < 1;
+            AddDialogue(container);
 
-            if (isNewDialogue)
-            {
-                dialogues.Add(new DialogueContainer(dialogue, StateDialogue.NotStarted));
-            }
-        }
-
-        public void ShowDialogue(string name)
-        {
-            _currentDialogue = dialogues.FirstOrDefault(d => d.Container.NameContainer == name);
+            _currentDialogue = dialogues.FirstOrDefault(d => d.Container == container);
 
             switch (_currentDialogue.State)
             {
                 case StateDialogue.NotStarted:
-                    dialogueWindow.Show();
-                    dialogueWindow.StartDialogue(_currentDialogue.Container, _currentDialogue.State);
-                    _currentDialogue.EditState(StateDialogue.InProgress);
+                    ShowDialogue(_currentDialogue.State);
+                    _currentDialogue.State = StateDialogue.InProgress;
                     break;
                 case StateDialogue.InProgress:
-                    dialogueWindow.Show();
-                    dialogueWindow.StartDialogue(_currentDialogue.Container, _currentDialogue.State);
+                    ShowDialogue(_currentDialogue.State);
                     break;
                 case StateDialogue.Completed:
                 default:
@@ -52,10 +58,141 @@ namespace DialogueSystem
             }
         }
 
-        public void CompleteDialogue(string name)
+        /// <summary>
+        /// Завершает входящий диалог из диалога-контейнера (назначает ему статус Completed )
+        /// </summary>
+        /// <param name="dialogue">Диалога-контейнер</param>
+        public void CompleteDialogue(DialogueContainerSO dialogue)
         {
-            _currentDialogue = dialogues.FirstOrDefault(d => d.Container.NameContainer == name);
+            _currentDialogue = dialogues.FirstOrDefault(d => d.Container == dialogue);
             _currentDialogue.State = StateDialogue.Completed;
+        }
+
+        /// <summary>
+        /// Проверяет диалог из диалога-контейнера на наличии в списке активынх диалогов и,
+        /// если его так нет, добавляет в него
+        /// </summary>
+        /// <param name="dialogue">Диалог-контейнер</param>
+        private void AddDialogue(DialogueContainerSO dialogue)
+        {
+            bool isNewDialogue = dialogues.FindAll(d => d.Container == dialogue).Count() < 1;
+
+            if (isNewDialogue)
+            {
+                dialogues.Add(new DialogueStateContainer(dialogue, StateDialogue.NotStarted));
+            }
+        }
+
+        /// <summary>
+        /// Показывает диалоговое окно и запускает логику диалога до следующего состояния
+        /// </summary>
+        /// <param name="stateDialogue">Состояние диалога </param>
+        private void ShowDialogue(StateDialogue stateDialogue)
+        {
+            dialogueWindow.Show();
+
+            if (stateDialogue == StateDialogue.NotStarted)
+            {
+                UpdateStateDialogueGroup();
+            }
+            DialogueProcess();
+        }
+
+
+        /// <summary>
+        /// Обновляет состояние прогресса диалога (progress-part)
+        /// </summary>
+        private void UpdateStateDialogueGroup()
+        {
+            if (_activeStateDialogueGroup != StatusDialogueGroup.Complete)
+            {
+                _activeStateDialogueGroup += 1;
+                _group = _currentDialogue.Container.GetGroup(_activeStateDialogueGroup);
+                _dialogues = _group.Dialogues;
+            }
+            else
+            {
+                CompleteDialogue(_currentDialogue.Container);
+            }
+        }
+
+        /// <summary>
+        /// Запускает процесс диалога
+        /// </summary>
+        public void DialogueProcess()
+        {
+            if (_currentDialogue.Container.IsQuestDialogue && 
+                (_activeStateDialogueGroup == StatusDialogueGroup.Progress))  //Повтор реплики ожидания выполнения задания
+            {
+                if (QuestsSystemController.Instance.CheckStateQuest(_activeReplica.Quest) == State.InProcess)
+                {
+                    if (_indexActiveReplica < _dialogues.Last().Replicas.Length)
+                    {
+                        if (_indexActiveSpeaker < _dialogues.Length)
+                        {
+                            UpdateVisualDialogue();
+                            _indexActiveSpeaker++;
+                        }
+                        else
+                        {
+                            _indexActiveSpeaker = 0;
+                            _indexActiveReplica++;
+                            DialogueProcess();
+                        }
+                    }
+                    else
+                    {
+                        _indexActiveReplica = 0;
+                        DialogueWindow.Instance.Hide();
+                    }
+                }
+                else if (QuestsSystemController.Instance.CheckStateQuest(_activeReplica.Quest) == State.Completed)
+                {
+                    UpdateStateDialogueGroup();
+                    DialogueProcess();
+                }
+            } 
+            else
+            {
+                if (_indexActiveReplica < _dialogues.Last().Replicas.Length)
+                {
+                    if (_indexActiveSpeaker < _dialogues.Length)
+                    {
+                        UpdateVisualDialogue();
+                        _indexActiveSpeaker++;
+
+                        if (_currentDialogue.Container.IsQuestDialogue && 
+                            (_activeReplica.Quest != null) && 
+                            _activeReplica.StateQuest.Equals(State.Give))
+                        {
+                            QuestsSystemController.Instance.NewQuest(_activeReplica.Quest);
+                        }
+                    }
+                    else
+                    {
+                        _indexActiveSpeaker = 0;
+                        _indexActiveReplica++;
+                        DialogueProcess();
+                    }
+                }
+                else
+                {
+                    _indexActiveReplica = 0;
+                    UpdateStateDialogueGroup();
+                    DialogueWindow.Instance.Hide();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Обновляет реплику и спикера в диалоговой панели
+        /// </summary>
+        private void UpdateVisualDialogue()
+        {
+            _activeDialogue = _dialogues[_indexActiveSpeaker];
+            _activeReplica = _activeDialogue.Replicas[_indexActiveReplica];
+
+            DialogueWindow.Instance.UpdateDialoguePanel(_activeDialogue.Speaker, _activeReplica.Text);
         }
     }
 }

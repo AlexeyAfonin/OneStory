@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b48a38b7084a645b97ee5930026bf5, type: 3}
   m_Name: CompleteQuestGroup
   m_EditorClassIdentifier: 
-  typeGroup: 3
+  statusGroup: 3
   dialoguesSO:
   - {fileID: 11400000, guid: c481cb2acd0042c4b8f8416adeaedc4f, type: 2}
   - {fileID: 11400000, guid: 0dd9bddca416a754ea2b95a2b5eafad6, type: 2}

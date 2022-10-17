@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b48a38b7084a645b97ee5930026bf5, type: 3}
   m_Name: ProgressQuestGroup
   m_EditorClassIdentifier: 
-  typeGroup: 2
+  statusGroup: 2
   dialoguesSO:
   - {fileID: 11400000, guid: 6b164ff1fa95d3b4db6853a4d69e8db2, type: 2}
   - {fileID: 11400000, guid: 86d7b65eeddf9374b978b40a42b31513, type: 2}
