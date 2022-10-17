@@ -27,12 +27,12 @@ namespace DialogueSystem
             switch (_currentDialogue.State)
             {
                 case StateDialogue.NotStarted:
-                    ShowWindow();
+                    dialogueWindow.Show();
                     dialogueWindow.StartDialogue(_currentDialogue.Container, _currentDialogue.State);
                     _currentDialogue.EditState(StateDialogue.InProgress);
                     break;
                 case StateDialogue.InProgress:
-                    ShowWindow();
+                    dialogueWindow.Show();
                     dialogueWindow.StartDialogue(_currentDialogue.Container, _currentDialogue.State);
                     break;
                 case StateDialogue.Completed:
@@ -46,8 +46,5 @@ namespace DialogueSystem
             _currentDialogue = dialogues.FirstOrDefault(d => d.Container.NameContainer == name);
             _currentDialogue.State = StateDialogue.Completed;
         }
-
-        public void ShowWindow() => dialogueWindow.gameObject.SetActive(true);
-        public void HideWindow() => dialogueWindow.gameObject.SetActive(false);
     }
 }

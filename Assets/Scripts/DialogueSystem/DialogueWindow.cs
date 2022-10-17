@@ -9,13 +9,14 @@ using static DialogueSystem.Core.DialogueEnums;
 using QuestSystem;
 using static QuestSystem.Base.QuestEnums;
 using DialogueSystem.Structures;
+using Core.Base;
 
 namespace DialogueSystem.UI
 {
     [AddComponentMenu(menuName: "DialogueSystem/UI/DialogueWindow", order: 1)]
-    public class DialogueWindow : MonoBehaviour
+    public sealed class DialogueWindow : BaseWindow
     {
-        [Header("GUI")]
+        [Space(10f)]
         [SerializeField] private TextMeshProUGUI header;
         [SerializeField] private TextMeshProUGUI content;
 
@@ -79,7 +80,7 @@ namespace DialogueSystem.UI
                     else
                     {
                         _indexActiveReplica = 0;
-                        DialogueSystemController.Instance.HideWindow();
+                        Hide();
                     }
                 }
                 else if (QuestsSystemController.Instance.CheckStateQuest(_activeReplica.Quest) == State.Completed)
@@ -114,7 +115,7 @@ namespace DialogueSystem.UI
                 {
                     _indexActiveReplica = 0;
                     UpdateStateDialogueGroup();
-                    DialogueSystemController.Instance.HideWindow();
+                    Hide();
                 }
             }
         }

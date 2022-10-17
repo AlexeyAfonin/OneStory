@@ -38,13 +38,13 @@ namespace QuestSystem
 
         public void ShowQuestsWindow(QuestSO quest)
         {
-            questsWindow.ShowPanel();
+            questsWindow.Show();
             questsWindow.SetQuest(quest);
         }
 
         public void HideQuestsWindow()
         {
-            questsWindow.HidePanel();
+            questsWindow.Hide();
         }
 
         public void UpdateProgressQuestPanel(int progressAmount)

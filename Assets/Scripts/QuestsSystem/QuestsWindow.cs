@@ -1,3 +1,4 @@
+using Core.Base;
 using QuestSystem.SO;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,9 +8,8 @@ using UnityEngine;
 namespace QuestSystem.UI
 {
     [AddComponentMenu(menuName: "QuestsSystem/UI/QuestsWindow", order: 1)]
-    public class QuestsWindow : MonoBehaviour
+    public sealed class QuestsWindow : BaseWindow
     {
-        [SerializeField] private GameObject questsPanel;
         [Space(10f)]
         [SerializeField] private TextMeshProUGUI header;
         [SerializeField] private TextMeshProUGUI discription;
@@ -33,11 +33,5 @@ namespace QuestSystem.UI
             _amount += amount;
             target.text = $"Прогресс: {_amount}/{_quest.AmountTarget}";
         }
-
-        public void ShowPanel() =>
-            questsPanel.SetActive(true);
-
-        public void HidePanel() =>
-            questsPanel.SetActive(false);
     }
 }
