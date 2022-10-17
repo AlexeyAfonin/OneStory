@@ -24,6 +24,7 @@ public class CharacterController : MonoBehaviour, ICharacter
     protected CharacterState _state;
     protected string _name;
     protected int _health;
+    protected int _maxHealth;
     protected int _damage;
     protected float _speed;
 
@@ -33,6 +34,7 @@ public class CharacterController : MonoBehaviour, ICharacter
     public CharacterState State => _state;
     public string Name => _name;
     public int Health => _health;
+    public int MaxHealth => _maxHealth;
     public int Damage => _damage;
     public float Speed => _speed;
 
@@ -68,6 +70,7 @@ public class CharacterController : MonoBehaviour, ICharacter
         _health = config.Health;
         _damage = config.Damage;
         _speed = config.Speed;
+        _maxHealth = _health;
     }
 
     protected virtual void Attack() { }

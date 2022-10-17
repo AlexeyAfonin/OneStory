@@ -4,6 +4,7 @@ using DialogueSystem.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static OneStory.Core.Utils.Enums;
 using UCharacterController = UnityEngine.CharacterController;
 
@@ -13,6 +14,8 @@ public sealed class PlayerController : CharacterController
     [Space(10f)]
     [Header ("Camera")]
     [SerializeField] private Transform cinemachineCamera;
+    [Header("UI")]
+    [SerializeField] private Image healthbarFillSprite;
 
     private UCharacterController _controller;
 
@@ -101,6 +104,7 @@ public sealed class PlayerController : CharacterController
     public override void TakeDamage(int damage)
     {
         base.TakeDamage(damage);
+        healthbarFillSprite.fillAmount = _health / _maxHealth;
         _characterAnimator.PlayAnimation(CharacterAnimations.Hit);
     }
     
