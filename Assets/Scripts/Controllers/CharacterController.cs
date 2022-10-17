@@ -17,8 +17,11 @@ public class CharacterController : MonoBehaviour, ICharacter
     [SerializeField] protected Animator animator;
     [Header("Radiuses")]
     [SerializeField] protected Collider interactRadius;
+    [Header("Points")]
+    [SerializeField] protected Transform dialogueCameraViewPosition;
 
     protected CharacterType _type;
+    protected CharacterState _state;
     protected string _name;
     protected int _health;
     protected int _damage;
@@ -27,6 +30,7 @@ public class CharacterController : MonoBehaviour, ICharacter
     protected CharacterAnimator _characterAnimator;
 
     public CharacterType Type => _type;
+    public CharacterState State => _state;
     public string Name => _name;
     public int Health => _health;
     public int Damage => _damage;
@@ -34,6 +38,7 @@ public class CharacterController : MonoBehaviour, ICharacter
 
     public bool IsDead { get; protected set; }
     public bool IsWaitAnim { get; set; }
+    public bool IsCanInteract { get; set; }
 
     protected virtual void Awake()
     {
@@ -76,6 +81,7 @@ public class CharacterController : MonoBehaviour, ICharacter
     protected virtual void Dead() 
     {
         enabled = false;
+        _state = CharacterState.Dead;
     }
 
     public virtual void TakeDamage(int damage)
@@ -83,4 +89,10 @@ public class CharacterController : MonoBehaviour, ICharacter
         _health -= damage;
         IsDead = _health <= 0;
     }
+
+    protected virtual void OnTriggerEnter(Collider other) { }
+
+    protected virtual void OnTriggerStay(Collider other) { }
+
+    protected virtual void OnTriggerExit(Collider other) { }
 }

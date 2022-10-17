@@ -33,6 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2385128936354969982}
+  - {fileID: 3888725232077019711}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -64,6 +65,7 @@ MonoBehaviour:
   dialogue: {fileID: 11400000, guid: b518130c83e6f5549a67ca9b8a2fdfb9, type: 2}
   animator: {fileID: 5734117931863102468}
   interactRadius: {fileID: 1114225581}
+  dialogueCameraViewPosition: {fileID: 3888725232077019711}
 --- !u!135 &1114225581
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -91,6 +93,37 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!1 &7188221988419667589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3888725232077019711}
+  m_Layer: 0
+  m_Name: DialogueCameraViewPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3888725232077019711
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7188221988419667589}
+  m_LocalRotation: {x: 0.10179035, y: -0.49653426, z: 0.05876869, w: 0.86002254}
+  m_LocalPosition: {x: 1.5, y: 0.85, z: -0.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5114983621628616836}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 13.5, y: -60, z: 0}
 --- !u!1001 &5114983620249047716
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -98,10 +131,60 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5114983621628616836}
     m_Modifications:
+    - target: {fileID: 679972489002419872, guid: 987576ea6c44e534d95bd5c51872d50b,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 2420badd4677a844ea2a1bbba5064bea, type: 2}
+    - target: {fileID: 3691219167870902469, guid: 987576ea6c44e534d95bd5c51872d50b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.1088609
+      objectReference: {fileID: 0}
+    - target: {fileID: 3691219167870902469, guid: 987576ea6c44e534d95bd5c51872d50b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.98758966
+      objectReference: {fileID: 0}
+    - target: {fileID: 3691219167870902469, guid: 987576ea6c44e534d95bd5c51872d50b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.008463892
+      objectReference: {fileID: 0}
+    - target: {fileID: 3691219167870902469, guid: 987576ea6c44e534d95bd5c51872d50b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.12929514
+      objectReference: {fileID: 0}
+    - target: {fileID: 3691219167870902469, guid: 987576ea6c44e534d95bd5c51872d50b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.08875774
+      objectReference: {fileID: 0}
     - target: {fileID: 5890397670660725193, guid: 987576ea6c44e534d95bd5c51872d50b,
         type: 3}
       propertyPath: m_Name
       value: SerahBikini
+      objectReference: {fileID: 0}
+    - target: {fileID: 6975396981497852545, guid: 987576ea6c44e534d95bd5c51872d50b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6975396981497852545, guid: 987576ea6c44e534d95bd5c51872d50b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.018641893
+      objectReference: {fileID: 0}
+    - target: {fileID: 6975396981497852545, guid: 987576ea6c44e534d95bd5c51872d50b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.00048669375
+      objectReference: {fileID: 0}
+    - target: {fileID: 6975396981497852545, guid: 987576ea6c44e534d95bd5c51872d50b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7486597359109123034, guid: 987576ea6c44e534d95bd5c51872d50b,
         type: 3}

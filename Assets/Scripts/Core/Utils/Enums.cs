@@ -17,5 +17,19 @@ namespace OneStory.Core.Utils
             Hit = 3,
             Dying = 4,
         }
+
+        public enum CharacterState
+        {
+            Free = 0,
+            Fights = 1,
+            Interacts = 2,
+            Dead = 3,
+        }
+
+        public enum StateCamera
+        {
+            Unfreeze = 0,
+            Freeze = 1,
+        }
     }
 }

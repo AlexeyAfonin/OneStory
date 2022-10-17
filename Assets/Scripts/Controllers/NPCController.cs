@@ -2,6 +2,7 @@ using DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static OneStory.Core.Utils.Enums;
 
 public class NPCController : CharacterController
 {
@@ -20,7 +21,7 @@ public class NPCController : CharacterController
         base.Update();
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<PlayerController>(out var player))
         {
@@ -29,18 +30,41 @@ public class NPCController : CharacterController
             DialogueSystemController.Instance.AddDialogue(dialogue);
 
             player.IsCanInteract = true;
-            player.Dialogue = dialogue;
+            player.DialogueWithOther = dialogue;
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    protected override void OnTriggerStay(Collider other)
+    {
+        if (other.TryGetComponent<PlayerController>(out var player))
+        {
+            if (player.State == CharacterState.Interacts)
+            {
+                var cameraController = CameraController.Instance;
+
+                if (cameraController.MainCamera.State == StateCamera.Unfreeze)
+                {
+                    cameraController.FreezeCamera();
+                    cameraController.SetCameraPosition(dialogueCameraViewPosition.position, dialogueCameraViewPosition.rotation);
+                }
+            }
+        }
+    }
+
+    protected override void OnTriggerExit(Collider other)
     {
         if (other.TryGetComponent<PlayerController>(out var player))
         {
             HelpWindow.Instance.Hide();
 
             player.IsCanInteract = false;
-            player.Dialogue = null;
+            player.DialogueWithOther = null;
+
+            var cameraController = CameraController.Instance;
+            if (cameraController.MainCamera.State == StateCamera.Freeze)
+            {
+                cameraController.UnfreezeCamera();
+            }
         }
     }
 }

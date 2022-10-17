@@ -25,9 +25,7 @@ public sealed class PlayerController : CharacterController
     private float _turnSmoothVelocity;
     private float _targetAngle;
 
-    public bool IsCanInteract;
-
-    public DialogueContainerSO Dialogue;
+    public DialogueContainerSO DialogueWithOther { get; set; }
 
     protected override void Awake()
     {
@@ -52,6 +50,7 @@ public sealed class PlayerController : CharacterController
         base.Update();
 
         Control();
+        CheckState();
     }
 
     protected override void FixedUpdate()
@@ -122,7 +121,7 @@ public sealed class PlayerController : CharacterController
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            TakeDamage(10);
+            //TakeDamage(10);
         }
 
         if (!IsWaitAnim)
@@ -134,13 +133,20 @@ public sealed class PlayerController : CharacterController
 
             if (Input.GetButtonDown("Interact") && IsCanInteract)
             {
-                if (Dialogue != null)
+                if (DialogueWithOther != null)
                 {
-                    DialogueSystemController.Instance.ShowDialogue(Dialogue.NameContainer);
+                    _state = CharacterState.Interacts;
+                    DialogueSystemController.Instance.ShowDialogue(DialogueWithOther.NameContainer);
                 }
             }
         }
     }
+
+    private void CheckState()
+    {
+        if (!IsCanInteract && (_state == CharacterState.Interacts))
+            _state = CharacterState.Free;
+    }    
 
     private void LockMouse()
     {
