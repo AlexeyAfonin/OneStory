@@ -6,6 +6,9 @@ using TMPro;
 using DialogueSystem.SO;
 using System.Linq;
 using static DialogueSystem.Core.DialogueEnums;
+using QuestSystem;
+using static QuestSystem.Base.QuestEnums;
+using DialogueSystem.Structures;
 
 namespace DialogueSystem.UI
 {
@@ -16,11 +19,13 @@ namespace DialogueSystem.UI
         [SerializeField] private TextMeshProUGUI header;
         [SerializeField] private TextMeshProUGUI content;
 
-        private TypeDialogueGroup activeTypeDialogueGroup = TypeDialogueGroup.None;
+        private StateDialogueGroup _activeStateDialogueGroup = StateDialogueGroup.None;
 
         private DialogueContainerSO _container;
         private DialogueGroupSO _group;
         private DialogueSO[] _dialogues;
+        private DialogueSO _activeSpeaker;
+        private Replica _activeReplica;
 
         private int _indexActiveSpeaker = 0;
         private int _indexActiveReplica = 0;
@@ -30,17 +35,17 @@ namespace DialogueSystem.UI
             _container = container;
             if (stateDialogue == StateDialogue.NotStarted)
             {
-                UpdateStateDialogue();
+                UpdateStateDialogueGroup();
             }
             Continue();
         }
 
-        private void UpdateStateDialogue()
+        private void UpdateStateDialogueGroup()
         {
-            if (activeTypeDialogueGroup != TypeDialogueGroup.Complete)
+            if (_activeStateDialogueGroup != StateDialogueGroup.Complete)
             {
-                activeTypeDialogueGroup += 1;
-                _group = _container.GetGroup(activeTypeDialogueGroup);
+                _activeStateDialogueGroup += 1;
+                _group = _container.GetGroup(_activeStateDialogueGroup);
                 _dialogues = _group.Dialogues;
             }
             else
@@ -51,28 +56,76 @@ namespace DialogueSystem.UI
 
         public void Continue()
         {
-            if (_indexActiveReplica < _dialogues.Last().Replicas.Length)
+            if (_container.IsQuestDialogue &&
+                    _activeStateDialogueGroup == StateDialogueGroup.Progress)
             {
-                if (_indexActiveSpeaker < _dialogues.Length)
+                if (QuestsSystemController.Instance.CheckStateQuest(_activeReplica.Quest) == State.InProcess)
                 {
-                    header.text = _dialogues[_indexActiveSpeaker].Speaker;
-                    content.text = _dialogues[_indexActiveSpeaker].Replicas[_indexActiveReplica].Text;
+                    if (_indexActiveReplica < _dialogues.Last().Replicas.Length)
+                    {
+                        if (_indexActiveSpeaker < _dialogues.Length)
+                        {
+                            UpdateVisualDialogue();
 
-                    _indexActiveSpeaker++;
+                            _indexActiveSpeaker++;
+                        }
+                        else
+                        {
+                            _indexActiveSpeaker = 0;
+                            _indexActiveReplica++;
+                            Continue();
+                        }
+                    }
+                    else
+                    {
+                        _indexActiveReplica = 0;
+                        DialogueSystemController.Instance.HideWindow();
+                    }
                 }
-                else
+                else if (QuestsSystemController.Instance.CheckStateQuest(_activeReplica.Quest) == State.Completed)
                 {
-                    _indexActiveSpeaker = 0;
-                    _indexActiveReplica++;
+                    UpdateStateDialogueGroup();
                     Continue();
                 }
             }
             else
             {
-                _indexActiveReplica = 0;
-                UpdateStateDialogue();
-                DialogueSystemController.Instance.HideWindow();
+                if (_indexActiveReplica < _dialogues.Last().Replicas.Length)
+                {
+                    if (_indexActiveSpeaker < _dialogues.Length)
+                    {
+                        UpdateVisualDialogue();
+
+                        if (_activeReplica.Quest != null && _activeReplica.StateQuest.Equals(State.Give))
+                        {
+                            QuestsSystemController.Instance.NewQuest(_activeReplica.Quest);
+                        }
+
+                        _indexActiveSpeaker++;
+                    }
+                    else
+                    {
+                        _indexActiveSpeaker = 0;
+                        _indexActiveReplica++;
+                        Continue();
+                    }
+                }
+                else
+                {
+                    _indexActiveReplica = 0;
+                    UpdateStateDialogueGroup();
+                    DialogueSystemController.Instance.HideWindow();
+                }
             }
+        }
+
+        private void UpdateVisualDialogue()
+        {
+            _activeSpeaker = _dialogues[_indexActiveSpeaker];
+            _activeReplica = _activeSpeaker.Replicas[_indexActiveReplica];
+
+            header.text = _activeSpeaker.Speaker;
+            content.text = _activeReplica.Text;
         }
 
         private void Complete()

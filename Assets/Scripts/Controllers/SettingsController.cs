@@ -1,5 +1,5 @@
 using OneStory.Configs;
-using OneStory.Core.Utils;
+using Core.Utils;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

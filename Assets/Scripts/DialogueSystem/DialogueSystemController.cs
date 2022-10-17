@@ -1,4 +1,4 @@
-using OneStory.Core.Utils;
+using Core.Utils;
 using DialogueSystem.Core;
 using DialogueSystem.UI;
 using System.Collections;
@@ -9,13 +9,11 @@ using static DialogueSystem.Core.DialogueEnums;
 
 namespace DialogueSystem
 {
+    [AddComponentMenu(menuName: "DialogueSystem/Controller/DialogueSystemContoller", order: 1)]
     public sealed class DialogueSystemController : MonobehSingleton<DialogueSystemController>
     {
-        [Header("GUI")]
-        [SerializeField] private Canvas ui;
         [SerializeField] private DialogueWindow dialogueWindow;
         [Space(10f)]
-        [Header("Dialogues")]
         [SerializeField] private DialogueContainer[] dialogues;
 
         public DialogueContainer[] Dialogues => dialogues;

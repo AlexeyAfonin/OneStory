@@ -1,5 +1,5 @@
 using OneStory.Configs;
-using OneStory.DialogueSystem;
+using DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

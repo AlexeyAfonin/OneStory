@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace OneStory.Core.Utils
+namespace Core.Utils
 {
 	public abstract class MonobehSingleton<T> : MonoBehaviour where T : MonobehSingleton<T>
 	{

@@ -15,7 +15,9 @@ MonoBehaviour:
   speaker: Ben
   replicas:
   - Text: "\u0414\u0430, \u0432\u043E\u0442 \u0442\u0432\u043E\u044F \u0441\u0443\u043C\u043E\u0447\u043A\u0430."
-    IsLast: 0
+    Quest: {fileID: 11400000, guid: 9020fffb04d6c3c48a52e2ac1839caa0, type: 2}
+    StateQuest: 3
   - Text: "\u0412\u043F\u0440\u0435\u0434\u044C, \u0431\u0443\u0434\u044C \u043E\u0441\u0442\u043E\u0440\u043E\u0436\u043D\u0435\u0435.
       \u041F\u043E\u043A\u0430."
-    IsLast: 1
+    Quest: {fileID: 0}
+    StateQuest: 0

@@ -1,5 +1,6 @@
-using OneStory.Configs;
+using QuestSystem.SO;
 using UnityEngine;
+using static QuestSystem.Base.QuestEnums;
 
 namespace DialogueSystem.Structures
 {
@@ -8,6 +9,7 @@ namespace DialogueSystem.Structures
     {
         [TextArea(1, 10)] 
         public string Text;
-        public bool IsLast;
+        public QuestSO Quest;
+        public State StateQuest;
     }
 }
