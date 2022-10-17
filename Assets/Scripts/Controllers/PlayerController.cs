@@ -1,4 +1,5 @@
 using OneStory.Configs;
+using OneStory.DialogueSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -45,6 +46,7 @@ public sealed class PlayerController : CharacterController
 
         if (Input.GetKeyDown(KeyCode.Escape)) UnlockMouse();
         if (Input.GetKeyDown(KeyCode.Space)) TakeDamage(10);
+        if (Input.GetKeyDown(KeyCode.E)) DialogueSystemController.Instance.ShowDialogue("Quest");
 
         if (!IsWaitAnim)
         {

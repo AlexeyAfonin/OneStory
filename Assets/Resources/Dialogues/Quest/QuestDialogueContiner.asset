@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 221c7ad1e34516f46a630b2091479710, type: 3}
+  m_Name: QuestDialogueContiner
+  m_EditorClassIdentifier: 
+  nameContainer: Quest
+  dialoguesGroups:
+  - {fileID: 11400000, guid: ff9fb619f5f40f34a8c885d31f8ce233, type: 2}
+  - {fileID: 11400000, guid: 06308d8b7c2ee4243b2927556202cfbc, type: 2}
+  - {fileID: 11400000, guid: 79bb857ddfa40d3459ec7738479a0d5e, type: 2}
