@@ -1,6 +1,6 @@
-using OneStory.DialogueSystem.Structures;
+using DialogueSystem.Structures;
 
-namespace OneStory.DialogueSystem.Interfaces
+namespace DialogueSystem.Interfaces
 {
     internal interface IDialogue
     {

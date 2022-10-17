@@ -1,7 +1,7 @@
-using OneStory.DialogueSystem.SO;
-using static OneStory.DialogueSystem.Core.DialogueEnums;
+using DialogueSystem.SO;
+using static DialogueSystem.Core.DialogueEnums;
 
-namespace OneStory.DialogueSystem.Core
+namespace DialogueSystem.Core
 {
     [System.Serializable]
     public sealed class DialogueContainer

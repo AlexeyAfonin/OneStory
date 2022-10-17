@@ -1,10 +1,10 @@
-using OneStory.DialogueSystem.Interfaces;
-using OneStory.DialogueSystem.Structures;
+using DialogueSystem.Interfaces;
+using DialogueSystem.Structures;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace OneStory.DialogueSystem.SO
+namespace DialogueSystem.SO
 {
     [CreateAssetMenu(fileName = "Dialogue", menuName = "OneStory/DialogSystem/Dialogue", order = 1)]
     public class DialogueSO : ScriptableObject, IDialogue

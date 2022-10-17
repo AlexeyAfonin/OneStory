@@ -1,13 +1,13 @@
 using OneStory.Core.Utils;
-using OneStory.DialogueSystem.Core;
-using OneStory.DialogueSystem.UI;
+using DialogueSystem.Core;
+using DialogueSystem.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static OneStory.DialogueSystem.Core.DialogueEnums;
+using static DialogueSystem.Core.DialogueEnums;
 
-namespace OneStory.DialogueSystem
+namespace DialogueSystem
 {
     public sealed class DialogueSystemController : MonobehSingleton<DialogueSystemController>
     {

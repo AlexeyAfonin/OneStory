@@ -1,6 +1,7 @@
+using OneStory.Configs;
 using UnityEngine;
 
-namespace OneStory.DialogueSystem.Structures
+namespace DialogueSystem.Structures
 {
     [System.Serializable]
     public struct Replica

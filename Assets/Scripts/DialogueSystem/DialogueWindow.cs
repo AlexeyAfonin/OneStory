@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using OneStory.DialogueSystem.SO;
+using DialogueSystem.SO;
 using System.Linq;
-using static OneStory.DialogueSystem.Core.DialogueEnums;
+using static DialogueSystem.Core.DialogueEnums;
 
-namespace OneStory.DialogueSystem.UI
+namespace DialogueSystem.UI
 {
     [AddComponentMenu(menuName: "DialogueSystem/UI/DialogueWindow", order: 1)]
     public class DialogueWindow : MonoBehaviour

@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using static OneStory.DialogueSystem.Core.DialogueEnums;
+using static DialogueSystem.Core.DialogueEnums;
 
-namespace OneStory.DialogueSystem.SO
+namespace DialogueSystem.SO
 {
     [CreateAssetMenu(fileName = "DialogueContainer", menuName = "OneStory/DialogSystem/DialogueContainer", order = 3)]
     public class DialogueContainerSO : ScriptableObject

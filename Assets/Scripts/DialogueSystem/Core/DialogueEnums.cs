@@ -1,4 +1,4 @@
-namespace OneStory.DialogueSystem.Core
+namespace DialogueSystem.Core
 {
     public class DialogueEnums
     {
