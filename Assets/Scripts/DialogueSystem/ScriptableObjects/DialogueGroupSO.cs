@@ -1,0 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using static OneStory.DialogueSystem.Core.DialogueEnums;
+
+namespace OneStory.DialogueSystem.SO
+{
+    [CreateAssetMenu(fileName = "DialogueGroup", menuName = "OneStory/DialogSystem/DialogueGroup", order = 2)]
+    public class DialogueGroupSO : ScriptableObject
+    {
+        [SerializeField] private TypeDialogueGroup typeGroup;
+        [SerializeField] private DialogueSO[] dialoguesSO;
+
+        public TypeDialogueGroup TypeGroup => typeGroup;
+        public DialogueSO[] Dialogues => dialoguesSO;
+
+        public DialogueSO GetDialogue(string speaker) =>
+            dialoguesSO.FirstOrDefault(n => n.Speaker == speaker);
+
+        public DialogueSO GetDialogue(int index) =>
+            dialoguesSO[index];
+
+        public List<string> GetSpeakers()
+        {
+            List<string> speakers = new List<string>();
+
+            foreach (DialogueSO dialogue in Dialogues)
+            {
+                speakers.Add(dialogue.Speaker);
+            }
+
+            return speakers;
+        }
+    }
+}
