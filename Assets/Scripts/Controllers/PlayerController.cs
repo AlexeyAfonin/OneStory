@@ -1,9 +1,9 @@
-using OneStory.Configs;
 using DialogueSystem;
+using QuestSystem;
+using QuestSystem.SO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 using static OneStory.Core.Utils.Enums;
 using UCharacterController = UnityEngine.CharacterController;
 
@@ -16,11 +16,15 @@ public sealed class PlayerController : CharacterController
 
     private UCharacterController _controller;
 
+    private QuestSO _activeQuest;
+
     private bool _isMoving;
 
     private readonly float _turnSmoothTime = 0.1f;
     private float _turnSmoothVelocity;
     private float _targetAngle;
+
+    public bool IsCanInteract;
 
     protected override void Awake()
     {
@@ -44,14 +48,7 @@ public sealed class PlayerController : CharacterController
     {
         base.Update();
 
-        if (Input.GetKeyDown(KeyCode.Escape)) UnlockMouse();
-        if (Input.GetKeyDown(KeyCode.Space)) TakeDamage(10);
-        if (Input.GetKeyDown(KeyCode.E)) DialogueSystemController.Instance.ShowDialogue("Quest");
-
-        if (!IsWaitAnim)
-        {
-            if (Input.GetAxisRaw("Fire1") == 1) Attack();
-        }
+        Control();
     }
 
     protected override void FixedUpdate()
@@ -106,6 +103,37 @@ public sealed class PlayerController : CharacterController
     {
         base.TakeDamage(damage);
         _characterAnimator.PlayAnimation(CharacterAnimations.Hit);
+    }
+
+    public void GetQuest()
+    {
+        //_activeQuest = QuestsSystemController.Instance.Quests
+    }
+    
+    private void Control()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UnlockMouse();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            TakeDamage(10);
+        }
+
+        if (!IsWaitAnim)
+        {
+            if (Input.GetAxisRaw("Fire1") == 1)
+            {
+                Attack();
+            }
+
+            if (Input.GetButtonDown("Interact") && IsCanInteract)
+            {
+                DialogueSystemController.Instance.ShowDialogue("Quest");
+            }
+        }
     }
 
     private void LockMouse()

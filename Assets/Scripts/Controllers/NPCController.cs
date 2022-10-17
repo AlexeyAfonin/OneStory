@@ -18,4 +18,20 @@ public class NPCController : CharacterController
     {
         base.Update();
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<PlayerController>(out var player))
+        {
+            player.IsCanInteract = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent<PlayerController>(out var player))
+        {
+            player.IsCanInteract = false;
+        }
+    }
 }
