@@ -9,6 +9,12 @@ namespace DialogueSystem.Core
         public DialogueContainerSO Container;
         public StateDialogue State;
 
+        public DialogueContainer(DialogueContainerSO container, StateDialogue state)
+        {
+            Container = container;
+            State = state;
+        }
+
         public void EditState(StateDialogue state) => State = state;
     }
 }

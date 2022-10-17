@@ -1,4 +1,5 @@
 using DialogueSystem;
+using DialogueSystem.SO;
 using QuestSystem;
 using QuestSystem.SO;
 using System.Collections;
@@ -25,6 +26,8 @@ public sealed class PlayerController : CharacterController
     private float _targetAngle;
 
     public bool IsCanInteract;
+
+    public DialogueContainerSO Dialogue;
 
     protected override void Awake()
     {
@@ -131,7 +134,10 @@ public sealed class PlayerController : CharacterController
 
             if (Input.GetButtonDown("Interact") && IsCanInteract)
             {
-                DialogueSystemController.Instance.ShowDialogue("Quest");
+                if (Dialogue != null)
+                {
+                    DialogueSystemController.Instance.ShowDialogue(Dialogue.NameContainer);
+                }
             }
         }
     }

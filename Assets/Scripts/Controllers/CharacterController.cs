@@ -5,32 +5,32 @@ using OneStory.Interfaces;
 using OneStory.Configs;
 using OneStory.Core.Utils;
 using static OneStory.Core.Utils.Enums;
+using DialogueSystem.SO;
 
 [RequireComponent(typeof(CharacterAnimator))]
 public class CharacterController : MonoBehaviour, ICharacter
 {
-    [Header("Config")]
-    [SerializeField] private CharacterConfig config;
-    [Space(10f)]
-    [Header("Character parameters")]
-    [SerializeField] private CharacterType type;
-    [SerializeField] private new string name;
-    [SerializeField] private int health;
-    [SerializeField] private int damage;
-    [SerializeField] private float speed;
-    [Space(10f)]
+    [Header("Configs")]
+    [SerializeField] protected CharacterConfig config;
+    [SerializeField] protected DialogueContainerSO dialogue;    
     [Header("Animator")]
     [SerializeField] protected Animator animator;
     [Header("Radiuses")]
     [SerializeField] protected Collider interactRadius;
 
+    protected CharacterType _type;
+    protected string _name;
+    protected int _health;
+    protected int _damage;
+    protected float _speed;
+
     protected CharacterAnimator _characterAnimator;
 
-    public CharacterType Type => type;
-    public string Name => name;
-    public int Health => health;
-    public int Damage => damage;
-    public float Speed => speed;
+    public CharacterType Type => _type;
+    public string Name => _name;
+    public int Health => _health;
+    public int Damage => _damage;
+    public float Speed => _speed;
 
     public bool IsDead { get; protected set; }
     public bool IsWaitAnim { get; set; }
@@ -58,11 +58,11 @@ public class CharacterController : MonoBehaviour, ICharacter
 
     protected virtual void Initialize()
     {
-        type = config.Type;
-        name = name.IsNullOrEmpty() ? config.Name : name;
-        health = health.IsNull() ? config.Health : health;
-        damage = damage.IsNull() ? config.Damage : damage;
-        speed = speed.IsNull() ? config.Speed : speed;
+        _type = config.Type;
+        _name = config.Name;
+        _health = config.Health;
+        _damage = config.Damage;
+        _speed = config.Speed;
     }
 
     protected virtual void Attack() { }
@@ -80,7 +80,7 @@ public class CharacterController : MonoBehaviour, ICharacter
 
     public virtual void TakeDamage(int damage)
     {
-        health -= damage;
-        IsDead = health <= 0;
+        _health -= damage;
+        IsDead = _health <= 0;
     }
 }

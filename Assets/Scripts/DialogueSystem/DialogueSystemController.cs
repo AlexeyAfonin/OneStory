@@ -1,5 +1,6 @@
 using Core.Utils;
 using DialogueSystem.Core;
+using DialogueSystem.SO;
 using DialogueSystem.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,11 +15,21 @@ namespace DialogueSystem
     {
         [SerializeField] private DialogueWindow dialogueWindow;
         [Space(10f)]
-        [SerializeField] private DialogueContainer[] dialogues;
+        [SerializeField] private List<DialogueContainer> dialogues;
 
-        public DialogueContainer[] Dialogues => dialogues;
+        public List<DialogueContainer> Dialogues => dialogues;
 
         private DialogueContainer _currentDialogue;
+
+        public void AddDialogue(DialogueContainerSO dialogue)
+        {
+            bool isNewDialogue = dialogues.FindAll(d => d.Container == dialogue).Count() < 1;
+
+            if (isNewDialogue)
+            {
+                dialogues.Add(new DialogueContainer(dialogue, StateDialogue.NotStarted));
+            }
+        }
 
         public void ShowDialogue(string name)
         {
