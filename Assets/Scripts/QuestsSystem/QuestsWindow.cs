@@ -8,7 +8,7 @@ using UnityEngine;
 namespace QuestSystem.UI
 {
     [AddComponentMenu(menuName: "QuestsSystem/UI/QuestsWindow", order: 1)]
-    public sealed class QuestsWindow : BaseWindow
+    public sealed class QuestsWindow : BaseWindow<QuestsWindow>
     {
         [Space(10f)]
         [SerializeField] private TextMeshProUGUI header;

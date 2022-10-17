@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public sealed class HelpWindow : BaseWindow
+public sealed class HelpWindow : BaseWindow<HelpWindow>
 {
     [Space(10f)]
     [SerializeField] private TextMeshProUGUI promptText;

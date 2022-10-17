@@ -14,7 +14,7 @@ using Core.Base;
 namespace DialogueSystem.UI
 {
     [AddComponentMenu(menuName: "DialogueSystem/UI/DialogueWindow", order: 1)]
-    public sealed class DialogueWindow : BaseWindow
+    public sealed class DialogueWindow : BaseWindow<DialogueWindow>
     {
         [Space(10f)]
         [SerializeField] private TextMeshProUGUI header;

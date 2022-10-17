@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Core.Base
 {
-    public class BaseWindow : MonobehSingleton<BaseWindow>
+    public class BaseWindow<T> : MonobehSingleton<T> where T : BaseWindow<T>
     {
         [SerializeField] protected GameObject panel;
 
