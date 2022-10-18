@@ -3,6 +3,7 @@ using DialogueSystem.Core;
 using DialogueSystem.SO;
 using DialogueSystem.Structures;
 using DialogueSystem.UI;
+using OneStory.Core.Utils;
 using QuestSystem;
 using System.Collections;
 using System.Collections.Generic;
@@ -31,6 +32,11 @@ namespace DialogueSystem
 
         private int _indexActiveSpeaker = 0;
         private int _indexActiveReplica = 0;
+
+        private NPCController _npc;
+        private PlayerController _player;
+
+        private string _animationName;
         #endregion
 
         /// <summary>
@@ -59,12 +65,35 @@ namespace DialogueSystem
         }
 
         /// <summary>
+        /// Начинает/продолжает входящий диалог из диалога-контейнера
+        /// </summary>
+        /// <param name="container">Диалог-контейнер</param>
+        /// <param name="npc">NPC</param>
+        /// <param name="player">Игрок</param>
+        public void Dialogue(DialogueContainerSO container, NPCController npc, PlayerController player)
+        {
+            _npc = npc;
+            _player = player;
+            Dialogue(container);
+        }
+
+        /// <summary>
         /// Завершает входящий диалог из диалога-контейнера (назначает ему статус Completed )
         /// </summary>
         /// <param name="dialogue">Диалога-контейнер</param>
         public void CompleteDialogue(DialogueContainerSO dialogue)
         {
             _currentDialogue = dialogues.FirstOrDefault(d => d.Container == dialogue);
+            _currentDialogue.State = StateDialogue.Completed;
+        }
+
+        /// <summary>
+        /// Завершает входящий диалог по его названию (назначает ему статус Completed )
+        /// </summary>
+        /// <param name="name">Название диалога</param>
+        public void CompleteDialogue(string name)
+        {
+            _currentDialogue = dialogues.FirstOrDefault(d => d.Container.NameContainer == name);
             _currentDialogue.State = StateDialogue.Completed;
         }
 
@@ -142,8 +171,7 @@ namespace DialogueSystem
                     }
                     else
                     {
-                        _indexActiveReplica = 0;
-                        DialogueWindow.Instance.Hide();
+                        CloseWindow();
                     }
                 }
                 else if (QuestsSystemController.Instance.CheckStateQuest(_activeReplica.Quest) == State.Completed)
@@ -167,6 +195,17 @@ namespace DialogueSystem
                         {
                             QuestsSystemController.Instance.NewQuest(_activeReplica.Quest);
                         }
+
+                        if (_activeReplica.NamePlayAnimation.IsNotNullOrEmpty() && _npc != null)
+                        {
+                            _animationName = _activeReplica.NamePlayAnimation;
+
+                            if (!_activeReplica.IsPlayAfterDialogue)
+                            {
+                                _npc.PlayAnimation(_animationName);
+                                _animationName = "";
+                            }
+                        }
                     }
                     else
                     {
@@ -177,9 +216,8 @@ namespace DialogueSystem
                 }
                 else
                 {
-                    _indexActiveReplica = 0;
                     UpdateStateDialogueGroup();
-                    DialogueWindow.Instance.Hide();
+                    CloseWindow();
                 }
             }
         }
@@ -193,6 +231,19 @@ namespace DialogueSystem
             _activeReplica = _activeDialogue.Replicas[_indexActiveReplica];
 
             DialogueWindow.Instance.UpdateDialoguePanel(_activeDialogue.Speaker, _activeReplica.Text);
+        }
+
+        private void CloseWindow()
+        {
+            if (_animationName.IsNotNullOrEmpty())
+            {
+                _npc.PlayAnimation(_animationName);
+                _animationName = "";
+            }
+            _indexActiveReplica = 0;
+            _npc = null;
+            _player = null;
+            DialogueWindow.Instance.Hide();
         }
     }
 }

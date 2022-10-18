@@ -22,6 +22,11 @@ public class NPCController : CharacterController
         base.Update();
     }
 
+    public void PlayAnimation(string nameAnimation)
+    {
+        animator.Play(nameAnimation);
+    }
+
     protected override void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<PlayerController>(out var player))
@@ -29,6 +34,7 @@ public class NPCController : CharacterController
             HelpWindow.Instance.ShowPrompt($"Нажмите E чтобы поговорить с {Name}");
             player.IsCanInteract = true;
             player.DialogueWithOther = dialogue;
+            player.InteractebleNPC = this;
         }
     }
 

@@ -1,4 +1,4 @@
-namespace OneStory.Core.Utils
+namespace Core.Utils
 {
     public static class Extensions
     {

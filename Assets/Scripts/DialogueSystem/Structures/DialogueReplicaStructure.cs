@@ -11,6 +11,7 @@ namespace DialogueSystem.Structures
         public string Text;
         public QuestSO Quest;
         public State StateQuest;
-        public string TriggerAnimation;
+        public string NamePlayAnimation;
+        public bool IsPlayAfterDialogue;
     }
 }

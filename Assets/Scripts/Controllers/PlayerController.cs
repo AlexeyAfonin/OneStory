@@ -25,6 +25,8 @@ public sealed class PlayerController : CharacterController
     private float _turnSmoothVelocity;
     private float _targetAngle;
 
+    public NPCController InteractebleNPC { get; set; }
+
     public DialogueContainerSO DialogueWithOther { get; set; }
 
     protected override void Awake()
@@ -120,6 +122,12 @@ public sealed class PlayerController : CharacterController
             if (Input.GetAxisRaw("Fire1") == 1)
             {
                 Attack();
+                
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                DialogueSystemController.Instance.CompleteDialogue("Quest");
             }
 
             if (Input.GetButtonDown("Interact") && IsCanInteract)
@@ -127,7 +135,7 @@ public sealed class PlayerController : CharacterController
                 if (DialogueWithOther != null)
                 {
                     _state = CharacterState.Interacts;
-                    DialogueSystemController.Instance.Dialogue(DialogueWithOther);
+                    DialogueSystemController.Instance.Dialogue(DialogueWithOther, InteractebleNPC, this);
                 }
             }
         }
@@ -136,7 +144,10 @@ public sealed class PlayerController : CharacterController
     private void CheckState()
     {
         if (!IsCanInteract && (_state == CharacterState.Interacts))
+        {
+            InteractebleNPC = null;
             _state = CharacterState.Free;
+        }
     }    
 
     private void LockMouse()
