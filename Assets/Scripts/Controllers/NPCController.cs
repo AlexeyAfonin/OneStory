@@ -1,4 +1,5 @@
 using DialogueSystem;
+using DialogueSystem.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,6 +38,15 @@ public class NPCController : CharacterController
         {
             if (player.State == CharacterState.Interacts)
             {
+                if (DialogueWindow.Instance.IsVisiable)
+                {
+                    HelpWindow.Instance.Hide();
+                }
+                else
+                {
+                    HelpWindow.Instance.Show();
+                }
+
                 var cameraController = CameraController.Instance;
 
                 if (cameraController.MainCamera.State == StateCamera.Freeze && 
@@ -53,7 +63,6 @@ public class NPCController : CharacterController
         if (other.TryGetComponent<PlayerController>(out var player))
         {
             HelpWindow.Instance.Hide();
-
             player.IsCanInteract = false;
             player.DialogueWithOther = null;
         }
