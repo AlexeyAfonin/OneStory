@@ -12,14 +12,15 @@ public sealed class CharacterAnimator : MonoBehaviour
     public void Init(Animator animatorController) => 
         _animator = animatorController;
 
-    public void PlayAnimation(CharacterAnimations animation)
+    public void PlayAnimation(CharacterAnimations animation, bool repeatAnimation = false)
     {
         _previousAnimation = _currentAnimation;
         _currentAnimation = animation;
 
 
-        if ((_currentAnimation != _previousAnimation) || 
-            ((_previousAnimation.Equals(CharacterAnimations.Idle) && (_currentAnimation.Equals(CharacterAnimations.Idle)))))
+        if (repeatAnimation || 
+            ((_currentAnimation != _previousAnimation) || 
+            ((_previousAnimation.Equals(CharacterAnimations.Idle) && (_currentAnimation.Equals(CharacterAnimations.Idle))))))
         {
             ResetAnimatorParameters();
 

@@ -11,6 +11,12 @@ public sealed class EnemyController : CharacterController
 
     private bool _isMoving;
 
+    private PlayerController _player;
+
+    public PlayerController Player => _player;
+
+    public bool IsCanAttack { get; set; } = true;
+
     protected override void Awake()
     {
         base.Awake();
@@ -37,7 +43,7 @@ public sealed class EnemyController : CharacterController
 
     protected override void Move()
     {
-        _isMoving = true;
+        /*_isMoving = true;
 
         if (_isMoving)
         {
@@ -46,12 +52,22 @@ public sealed class EnemyController : CharacterController
         else
         {
             _characterAnimator.PlayAnimation(CharacterAnimations.Idle);
-        }
+        }*/
     }
 
     protected override void Attack()
     {
-        _characterAnimator.PlayAnimation(CharacterAnimations.Attack);
+        _characterAnimator.PlayAnimation(CharacterAnimations.Attack, true);
+    }
+
+    public IEnumerator IAttackPlayer()
+    {
+        yield return new WaitForSecondsRealtime(0.6f);
+
+        if(_player != null && !IsDead)
+        {
+            _player.TakeDamage(_damage);
+        }
     }
 
     protected override void Dead()
@@ -72,7 +88,7 @@ public sealed class EnemyController : CharacterController
     {
         if (other.TryGetComponent<PlayerController>(out var player))
         {
-            
+            _player = player;
         }
     }
 
@@ -80,7 +96,10 @@ public sealed class EnemyController : CharacterController
     {
         if (other.TryGetComponent<PlayerController>(out var player))
         {
-            
+            if (IsCanAttack)
+            {
+                Attack();
+            }
         }
     }
 
@@ -88,7 +107,8 @@ public sealed class EnemyController : CharacterController
     {
         if (other.TryGetComponent<PlayerController>(out var player))
         {
-            
+            _player = null;
+            _characterAnimator.PlayAnimation(CharacterAnimations.Idle);
         }
     }
 }
