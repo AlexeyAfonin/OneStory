@@ -29,13 +29,11 @@ namespace DialogueSystem.UI
         public override void Show()
         {
             base.Show();
-            CameraController.Instance.FreezeCamera();
         }
 
         public override void Hide()
         {
             base.Hide();
-            CameraController.Instance.UnfreezeCamera();
         }
     }
 }

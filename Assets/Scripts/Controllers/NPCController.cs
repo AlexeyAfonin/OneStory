@@ -38,8 +38,10 @@ public class NPCController : CharacterController
         {
             HelpWindow.Instance.ShowPrompt($"Нажмите E чтобы поговорить с {Name}");
             player.IsCanInteract = true;
-            player.DialogueWithOther = dialogue;
+            player.ActiveDialogue = dialogue;
             player.InteractebleNPC = this;
+
+            CameraController.Instance.SpeakersGroup.AddMember(transform, 1, 1);
         }
     }
 
@@ -52,18 +54,12 @@ public class NPCController : CharacterController
                 if (DialogueWindow.Instance.IsVisiable)
                 {
                     HelpWindow.Instance.Hide();
+                    player.EnableDialogueCamera();
                 }
                 else
                 {
                     HelpWindow.Instance.Show();
-                }
-
-                var cameraController = CameraController.Instance;
-
-                if (cameraController.MainCamera.State == StateCamera.Freeze && 
-                    (cameraController.MainCamera.Camera.transform.position != dialogueCameraViewPosition.position))
-                {
-                    cameraController.SetCameraPosition(dialogueCameraViewPosition.position, dialogueCameraViewPosition.rotation);
+                    player.DisableDialogueCamera();
                 }
             }
         }
@@ -75,7 +71,9 @@ public class NPCController : CharacterController
         {
             HelpWindow.Instance.Hide();
             player.IsCanInteract = false;
-            player.DialogueWithOther = null;
+            player.ActiveDialogue = null;
+
+            CameraController.Instance.SpeakersGroup.RemoveMember(transform);
         }
     }
 }

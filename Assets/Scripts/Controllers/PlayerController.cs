@@ -1,3 +1,4 @@
+using Cinemachine;
 using DialogueSystem;
 using DialogueSystem.SO;
 using DialogueSystem.UI;
@@ -11,11 +12,14 @@ using UCharacterController = UnityEngine.CharacterController;
 [RequireComponent(typeof(UCharacterController))]
 public sealed class PlayerController : CharacterController
 {
-    [Space(10f)]
-    [Header ("Camera")]
-    [SerializeField] private Transform cinemachineCamera;
     [Header("UI")]
     [SerializeField] private Image healthbarFillSprite;
+    [Header("Points")]
+    [SerializeField] private Transform dialogueCameraPosition;
+
+    private Camera _mainCamera;
+    private CinemachineFreeLook _playerCamera;
+    private CinemachineVirtualCamera _dialogueCamera;
 
     private UCharacterController _controller;
 
@@ -30,7 +34,7 @@ public sealed class PlayerController : CharacterController
 
     public NPCController InteractebleNPC { get; set; }
 
-    public DialogueContainerSO DialogueWithOther { get; set; }
+    public DialogueContainerSO ActiveDialogue { get; set; }
 
     protected override void Awake()
     {
@@ -44,10 +48,12 @@ public sealed class PlayerController : CharacterController
 
         _controller = GetComponent<UCharacterController>();
 
-        if (cinemachineCamera == null)
-        {
-            cinemachineCamera = Camera.main.transform;
-        }
+        _mainCamera = CameraController.Instance.MainCamera;
+        _playerCamera = CameraController.Instance.PlayerCinemachineCamera;
+        _dialogueCamera = CameraController.Instance.DialogueCinemachineCamera;
+
+        _playerCamera.enabled = true;
+        _dialogueCamera.enabled = false;
     }
 
     protected override void Update()
@@ -106,7 +112,7 @@ public sealed class PlayerController : CharacterController
 
     protected override void Rotate(Vector3 direction)
     {
-        _targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cinemachineCamera.eulerAngles.y;
+        _targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _mainCamera.transform.eulerAngles.y;
         float angle = Mathf.SmoothDampAngle(animator.transform.eulerAngles.y, _targetAngle, ref _turnSmoothVelocity, _turnSmoothTime);
         animator.transform.rotation = Quaternion.Euler(0f, angle, 0f);
     }
@@ -122,6 +128,16 @@ public sealed class PlayerController : CharacterController
         base.TakeDamage(damage);
         healthbarFillSprite.fillAmount = (float)_health / _maxHealth;
         _characterAnimator.PlayAnimation(CharacterAnimations.Hit);
+    }
+
+    public void EnableDialogueCamera()
+    {
+        _dialogueCamera.enabled = true;
+    }
+
+    public void DisableDialogueCamera()
+    {
+        _dialogueCamera.enabled = false;
     }
 
     private EnemyController GetNearestEnemy()
@@ -159,10 +175,10 @@ public sealed class PlayerController : CharacterController
 
             if (Input.GetButtonDown("Interact") && IsCanInteract)
             {
-                if (DialogueWithOther != null)
+                if (ActiveDialogue != null)
                 {
                     _state = CharacterState.Interacts;
-                    DialogueSystemController.Instance.Dialogue(DialogueWithOther, InteractebleNPC, this);
+                    DialogueSystemController.Instance.Dialogue(ActiveDialogue, InteractebleNPC, this);
                 }
             }
         }

@@ -26,12 +26,6 @@ namespace OneStory.Core.Utils
             Dead = 3,
         }
 
-        public enum StateCamera
-        {
-            Unfreeze = 0,
-            Freeze = 1,
-        }
-
         public enum TypeTriggerZone
         {
             None = 0,

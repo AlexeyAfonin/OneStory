@@ -17,8 +17,6 @@ public class CharacterController : MonoBehaviour, ICharacter
     [SerializeField] protected Animator animator;
     [Header("Radiuses")]
     [SerializeField] protected Collider TriggerZone;
-    [Header("Points")]
-    [SerializeField] protected Transform dialogueCameraViewPosition;
 
     protected CharacterType _type;
     protected CharacterState _state;
