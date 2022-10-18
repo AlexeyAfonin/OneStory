@@ -1,3 +1,4 @@
+using QuestSystem.SO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace DialogueSystem.SO
         [SerializeField] private string nameContainer;
         [SerializeField] private DialogueGroupSO[] dialoguesGroups;
         [SerializeField] private bool isQuestDialogue;
+        [SerializeField] private QuestSO quest;
         
         /// <summary>
         /// Название диалога
@@ -27,6 +29,11 @@ namespace DialogueSystem.SO
         /// Если true - то в процессе диалога, будет выдан квест
         /// </summary>
         public bool IsQuestDialogue => isQuestDialogue;
+
+        /// <summary>
+        /// Квест, который назначается игроку, в процессе диалога
+        /// </summary>
+        public QuestSO Quest => quest;
 
         /// <summary>
         /// Возврщает группу диалога (progress-part) по состоянию прогресса

@@ -153,7 +153,7 @@ namespace DialogueSystem
             if (_currentDialogue.Container.IsQuestDialogue && 
                 (_activeStateDialogueGroup == StatusDialogueGroup.Progress))  //ѕовтор реплики ожидани€ выполнени€ задани€
             {
-                if (QuestsSystemController.Instance.CheckStateQuest(_activeReplica.Quest) == State.InProcess)
+                if (QuestsSystemController.Instance.GetStateQuest(_activeReplica.Quest) == State.InProcess)
                 {
                     if (_indexActiveReplica < _dialogues.Last().Replicas.Length)
                     {
@@ -174,7 +174,7 @@ namespace DialogueSystem
                         CloseWindow();
                     }
                 }
-                else if (QuestsSystemController.Instance.CheckStateQuest(_activeReplica.Quest) == State.Completed)
+                else if (QuestsSystemController.Instance.GetStateQuest(_activeReplica.Quest) == State.Completed)
                 {
                     UpdateStateDialogueGroup();
                     DialogueProcess();

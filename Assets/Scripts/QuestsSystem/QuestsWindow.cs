@@ -17,21 +17,18 @@ namespace QuestSystem.UI
 
         private QuestSO _quest;
 
-        private int _amount = 0;
-
         public void SetQuest(QuestSO quest)
         {
             _quest = quest;
 
             header.text = $"Квест: {_quest.Name}";
             discription.text = $"Задача: {_quest.Description}";
-            target.text = $"Прогресс: {_amount}/{_quest.AmountTarget}";
+            target.text = $"Прогресс: {_quest.Progress}/{_quest.Target}";
         }
 
-        public void UpdateProgressTarget(int amount)
+        public void UpdateProgressTarget()
         {
-            _amount += amount;
-            target.text = $"Прогресс: {_amount}/{_quest.AmountTarget}";
+            target.text = $"Прогресс: {_quest.Progress}/{_quest.Target}";
         }
     }
 }

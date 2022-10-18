@@ -18,3 +18,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 06308d8b7c2ee4243b2927556202cfbc, type: 2}
   - {fileID: 11400000, guid: 79bb857ddfa40d3459ec7738479a0d5e, type: 2}
   isQuestDialogue: 1
+  quest: {fileID: 11400000, guid: 9020fffb04d6c3c48a52e2ac1839caa0, type: 2}

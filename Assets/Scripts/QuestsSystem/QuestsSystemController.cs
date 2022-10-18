@@ -19,19 +19,37 @@ namespace QuestSystem
 
         public List<QuestState> Quests => quests;
 
+        public QuestSO ActiveQuest;
+
         public void NewQuest(QuestSO quest)
         {
             Quests.Add(new QuestState(quest, State.InProcess));
+            ActiveQuest = quest;
             ShowQuestsWindow(quest);
+        }
+
+        public void UpdateProgressQuest(QuestSO quest, int amountProgress)
+        {
+            quest.Progress += amountProgress;
+            questsWindow.UpdateProgressTarget();
+            CheckStateQuest(quest);
+        }
+
+        public void CheckStateQuest(QuestSO quest)
+        {
+            if (quest.Progress >= quest.Target)
+            {
+                CompleteQuest(quest);
+            }
         }
 
         public void CompleteQuest(QuestSO quest)
         {
             Quests.FirstOrDefault(q => q.Quest == quest).State = State.Completed;
-            HideQuestsWindow();
+            //HideQuestsWindow();
         }
 
-        public State CheckStateQuest(QuestSO quest)
+        public State GetStateQuest(QuestSO quest)
         {
             return Quests.FirstOrDefault(q => q.Quest == quest).State;
         }
@@ -45,11 +63,6 @@ namespace QuestSystem
         public void HideQuestsWindow()
         {
             questsWindow.Hide();
-        }
-
-        public void UpdateProgressQuestPanel(int progressAmount)
-        {
-            questsWindow.UpdateProgressTarget(progressAmount);
-        }
+        }        
     }
 }

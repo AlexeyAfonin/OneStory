@@ -11,9 +11,11 @@ namespace QuestSystem.SO
         [SerializeField] private new string name;
         [SerializeField, TextArea(10, 10)] private string description;
         [SerializeField] private int amountTarget;
+        [SerializeField] private int progress;
 
         public string Name { get => name; set => name = value; }
         public string Description { get => description; set => description = value; }
-        public int AmountTarget { get => amountTarget; set => amountTarget = value; }
+        public int Target { get => amountTarget; set => amountTarget = value; }
+        public int Progress { get => progress; set => progress = value; }
     }
 }

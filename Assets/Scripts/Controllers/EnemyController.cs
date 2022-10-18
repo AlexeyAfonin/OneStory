@@ -1,3 +1,5 @@
+using QuestSystem;
+using QuestSystem.SO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,12 +14,14 @@ public sealed class EnemyController : CharacterController
     private NavMeshAgent _agent;
 
     private bool _isMoving;
+    private bool _isCountedInQuest = true;
 
     private PlayerController _player;
 
     public PlayerController Player => _player;
 
     public bool IsCanAttack { get; set; } = true;
+    public bool IsCountedInQuest => _isCountedInQuest;
 
     public Transform MoveTarget
     {
@@ -88,6 +92,10 @@ public sealed class EnemyController : CharacterController
     {
         _characterAnimator.PlayAnimation(CharacterAnimations.Dying);
         _agent = null;
+        if (IsCountedInQuest)
+        {
+            CountInQuest(QuestsSystemController.Instance.ActiveQuest);
+        }
         GetComponent<CapsuleCollider>().enabled = false;
         base.Dead();
     }
@@ -96,6 +104,15 @@ public sealed class EnemyController : CharacterController
     {
         base.TakeDamage(damage);
         _characterAnimator.PlayAnimation(CharacterAnimations.Hit);
+    }
+
+    private void CountInQuest(QuestSO quest)
+    {
+        if (quest != null)
+        {
+            QuestsSystemController.Instance.UpdateProgressQuest(quest, 1);
+            _isCountedInQuest = false;
+        }
     }
 
     protected override void OnTriggerEnter(Collider other)
