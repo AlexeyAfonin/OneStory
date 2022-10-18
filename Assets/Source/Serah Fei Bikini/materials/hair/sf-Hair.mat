@@ -8,19 +8,18 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: sf-Hair
-  m_Shader: {fileID: -6465566751694194690, guid: 384d88ff5b296a44b89f1fb2d4442c01,
-    type: 3}
+  m_Shader: {fileID: 4800000, guid: 6e4ae4064600d784cac1e41a9e6f2e59, type: 3}
   m_ValidKeywords:
   - _DISABLE_SSR_TRANSPARENT
   - _DOUBLESIDED_ON
-  - _ENABLE_FOG_ON_TRANSPARENT
+  - _NORMALMAP_TANGENT_SPACE
   - _SURFACE_TYPE_TRANSPARENT
   - _TRANSPARENT_WRITES_MOTION_VEC
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 3038
+  m_CustomRenderQueue: 3050
   stringTagMap:
     MotionVector: User
     RenderType: Transparent
@@ -28,7 +27,6 @@ Material:
   - RayTracingPrepass
   - MOTIONVECTORS
   - TransparentDepthPrepass
-  - TransparentDepthPostpass
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -38,8 +36,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _BaseColorMap:
         m_Texture: {fileID: 2800000, guid: 47e89a9586223c243b3927c25fe9b7db, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Scale: {x: 2.74, y: 2.38}
+        m_Offset: {x: -0.94, y: 0.04}
     - _BaseColorMap0:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -194,8 +192,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 47e89a9586223c243b3927c25fe9b7db, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Scale: {x: 2.74, y: 2.38}
+        m_Offset: {x: -0.94, y: 0.04}
     - _MaskMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -371,9 +369,9 @@ Material:
     - _ATDistance: 1
     - _AddPrecomputedVelocity: 0
     - _AlbedoAffectEmissive: 0
-    - _AlphaClipThreshold: 0.242
-    - _AlphaClipThresholdDepthPostpass: 0.677
-    - _AlphaClipThresholdDepthPrepass: 0.871
+    - _AlphaClipThreshold: 0.442
+    - _AlphaClipThresholdDepthPostpass: 0.424
+    - _AlphaClipThresholdDepthPrepass: 0.477
     - _AlphaCutoff: 0.5
     - _AlphaCutoffEnable: 0
     - _AlphaCutoffPostpass: 0.5
@@ -383,7 +381,7 @@ Material:
     - _AlphaLevel: 0.29
     - _AlphaPower: 1
     - _AlphaSrcBlend: 1
-    - _AlphaThresholdShadow: 0.635
+    - _AlphaThresholdShadow: 0.572
     - _AlphaToMask: 0
     - _AlphaToMaskInspectorValue: 0
     - _Anisotropy: 0
@@ -453,7 +451,7 @@ Material:
     - _EmissiveIntensity: 1
     - _EmissiveIntensityUnit: 0
     - _EnableBlendModePreserveSpecularLighting: 1
-    - _EnableFogOnTransparent: 1
+    - _EnableFogOnTransparent: 0
     - _EnableGeometricSpecularAA: 0
     - _EnableHeightBlend: 0
     - _EnableInstancedPerPixelNormal: 1
@@ -522,7 +520,7 @@ Material:
     - _InheritBaseNormal2: 0
     - _InheritBaseNormal3: 0
     - _InitialBend: 1
-    - _InvTilingScale: 1
+    - _InvTilingScale: 0.390625
     - _InvTilingScale0: 1
     - _InvTilingScale1: 1
     - _InvTilingScale2: 1
@@ -544,7 +542,7 @@ Material:
     - _MainHighlightPosition: 0.01
     - _MainHighlightStrength: 0.99
     - _MaterialID: 1
-    - _Metallic: 0.834
+    - _Metallic: 0.94
     - _Metallic0: 0
     - _Metallic1: 0
     - _Metallic2: 0
@@ -559,7 +557,7 @@ Material:
     - _NormalMapSpace1: 0
     - _NormalMapSpace2: 0
     - _NormalMapSpace3: 0
-    - _NormalScale: 1
+    - _NormalScale: 4.17
     - _NormalScale0: 1
     - _NormalScale1: 1
     - _NormalScale2: 1
@@ -582,7 +580,7 @@ Material:
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
     - _RefractionModel: 0
-    - _RenderQueueType: 4
+    - _RenderQueueType: 3
     - _RequireSplitLighting: 0
     - _SSRefractionProjectionModel: 0
     - _SSS: 0
@@ -594,13 +592,13 @@ Material:
     - _Shininess: 1
     - _ShiverDirectionality: 0.5
     - _ShiverDrag: 0.2
-    - _Smoothness: 0.557
+    - _Smoothness: 0.542
     - _Smoothness0: 0.5
     - _Smoothness1: 0.5
     - _Smoothness2: 0.5
     - _Smoothness3: 0.5
-    - _SmoothnessMax: 0.7
-    - _SmoothnessMin: 0.3
+    - _SmoothnessMax: 0.747
+    - _SmoothnessMin: 0.611
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMax0: 1
     - _SmoothnessRemapMax1: 1
@@ -669,9 +667,9 @@ Material:
     - _TransmissionRim: 0.2
     - _TransparentBackfaceEnable: 1
     - _TransparentCullMode: 2
-    - _TransparentDepthPostpassEnable: 0
+    - _TransparentDepthPostpassEnable: 1
     - _TransparentDepthPrepassEnable: 0
-    - _TransparentSortPriority: 38
+    - _TransparentSortPriority: 50
     - _TransparentWritingMotionVec: 1
     - _TransparentWritingVelocity: 0
     - _TransparentZWrite: 0
@@ -767,8 +765,8 @@ Material:
     - _UvTiling: {r: 1, g: 1, b: 0, a: 0}
     - _VariantColor1_GlossA: {r: 0.8897059, g: 0.1308391, b: 0.1308391, a: 0.516}
     - _Variant_Color2_GlossA: {r: 0, g: 0.1356491, b: 0.7867647, a: 0.516}
-    - _uvBaseST: {r: 2.4, g: 7.92, b: 0.37, a: 0}
-    - _uvSmoothnessST: {r: 20, g: 5, b: 0, a: 0}
+    - _uvBaseST: {r: 6.66, g: 5.14, b: 1.45, a: -2.72}
+    - _uvSmoothnessST: {r: 20.28, g: 1.9, b: -1.55, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &3880959847785934428
 MonoBehaviour:
