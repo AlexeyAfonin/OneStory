@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8346472343273883029}
   - component: {fileID: 3131218919890179191}
   - component: {fileID: 3131218919890179184}
+  - component: {fileID: 1595071129}
   m_Layer: 0
   m_Name: Enemy_1
   m_TagString: Untagged
@@ -66,6 +67,7 @@ MonoBehaviour:
   animator: {fileID: 8614574922649939049}
   TriggerZone: {fileID: 8346472343273883029}
   dialogueCameraViewPosition: {fileID: 0}
+  moveTarget: {fileID: 0}
 --- !u!135 &8346472343273883029
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -107,7 +109,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 0.8
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -115,6 +117,22 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1595071129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3830508155150966457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9143112f267bfba4bb433dc0cf803f26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  visionDistance: 5
+  amountRays: 30
+  angle: 60
+  offset: {x: 0, y: 0.9, z: 0}
 --- !u!1001 &8564892397865800739
 PrefabInstance:
   m_ObjectHideFlags: 0

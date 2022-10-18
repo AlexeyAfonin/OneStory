@@ -4,9 +4,11 @@ using UnityEngine;
 using UnityEngine.AI;
 using static OneStory.Core.Utils.Enums;
 
-[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(EnemyVision), typeof(NavMeshAgent))]
 public sealed class EnemyController : CharacterController
 {
+    [SerializeField] private Transform moveTarget;
+
     private NavMeshAgent _agent;
 
     private bool _isMoving;
@@ -17,6 +19,12 @@ public sealed class EnemyController : CharacterController
 
     public bool IsCanAttack { get; set; } = true;
 
+    public Transform MoveTarget
+    {
+        get => moveTarget;
+        set => moveTarget = value;
+    }
+
     protected override void Awake()
     {
         base.Awake();
@@ -26,6 +34,7 @@ public sealed class EnemyController : CharacterController
     {
         base.Start();
         _agent = GetComponent<NavMeshAgent>();
+        _agent.speed = _speed;
     }
 
     protected override void Update()
@@ -43,21 +52,26 @@ public sealed class EnemyController : CharacterController
 
     protected override void Move()
     {
-        /*_isMoving = true;
+        _isMoving = moveTarget != null;
 
         if (_isMoving)
         {
             _characterAnimator.PlayAnimation(CharacterAnimations.Walk);
+            _agent.SetDestination(moveTarget.position);
         }
         else
         {
             _characterAnimator.PlayAnimation(CharacterAnimations.Idle);
-        }*/
+            _agent.SetDestination(transform.position);
+        }
     }
 
     protected override void Attack()
     {
-        _characterAnimator.PlayAnimation(CharacterAnimations.Attack, true);
+        if (!IsWaitAnim)
+        {
+            _characterAnimator.PlayAnimation(CharacterAnimations.Attack, true);
+        }
     }
 
     public IEnumerator IAttackPlayer()
