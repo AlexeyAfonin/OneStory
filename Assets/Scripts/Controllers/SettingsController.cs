@@ -8,27 +8,24 @@ using UnityEngine.UI;
 public class SettingsController : MonobehSingleton<SettingsController>
 {
     [SerializeField] private SettingsConfig config;
-    [Header("Buttons")]
-    [SerializeField] private Button saveButton;
-    [SerializeField] private Button loadButton;
 
     public SettingsConfig Config => config;
 
     protected override void Awake()
     {
         base.Awake();
-
-        if(saveButton is not null) saveButton.onClick.AddListener(SaveSettings);
-        if(loadButton is not null) loadButton.onClick.AddListener(LoadSettings);
+        DontDestroyOnLoad(this);
     }
 
-    private void SaveSettings()
+    public void ChangeValueMusic(int value)
     {
-        Config.SaveSettings();
+        config.SettingsVariables.Music = value;
+        config.SaveSettings();
     }
 
-    private void LoadSettings()
+    public void ChangeValueSounds(int value)
     {
-        Config.LoadSettings();
+        config.SettingsVariables.Sounds = value;
+        config.SaveSettings();
     }
 }
