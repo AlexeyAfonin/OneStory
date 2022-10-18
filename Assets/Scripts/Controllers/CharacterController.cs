@@ -16,7 +16,7 @@ public class CharacterController : MonoBehaviour, ICharacter
     [Header("Animator")]
     [SerializeField] protected Animator animator;
     [Header("Radiuses")]
-    [SerializeField] protected Collider interactRadius;
+    [SerializeField] protected Collider TriggerZone;
     [Header("Points")]
     [SerializeField] protected Transform dialogueCameraViewPosition;
 
@@ -74,6 +74,8 @@ public class CharacterController : MonoBehaviour, ICharacter
     }
 
     protected virtual void Attack() { }
+
+    protected virtual IEnumerator IAttack() { return null; }
 
     protected virtual void Move() { }
 

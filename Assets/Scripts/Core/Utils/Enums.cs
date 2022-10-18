@@ -31,5 +31,20 @@ namespace OneStory.Core.Utils
             Unfreeze = 0,
             Freeze = 1,
         }
+
+        public enum TypeTriggerZone
+        {
+            None = 0,
+            Interactable = 1,
+            Attack = 2,
+        }
+
+        public enum TypeEventTriggerZone
+        {
+            None = 0,
+            Enter = 1,
+            Stay = 2,
+            Exit = 3,
+        }
     }
 }

@@ -25,6 +25,9 @@ public sealed class PlayerController : CharacterController
     private float _turnSmoothVelocity;
     private float _targetAngle;
 
+    private List<EnemyController> _enemiesInTriggerZone = new List<EnemyController>();
+    private EnemyController _currentEnemy;
+
     public NPCController InteractebleNPC { get; set; }
 
     public DialogueContainerSO DialogueWithOther { get; set; }
@@ -66,6 +69,17 @@ public sealed class PlayerController : CharacterController
     protected override void Attack()
     {
         _characterAnimator.PlayAnimation(CharacterAnimations.Attack);
+
+        if (_enemiesInTriggerZone.Count > 0)
+        {
+            StartCoroutine(IAttack());
+        }
+    }
+
+    protected override IEnumerator IAttack()
+    {
+        yield return new WaitForSecondsRealtime(0.5f);
+        GetNearestEnemy().TakeDamage(_damage);
     }
 
     protected override void Move()
@@ -109,7 +123,26 @@ public sealed class PlayerController : CharacterController
         healthbarFillSprite.fillAmount = _health / _maxHealth;
         _characterAnimator.PlayAnimation(CharacterAnimations.Hit);
     }
-    
+
+    private EnemyController GetNearestEnemy()
+    {
+        EnemyController enemyController = _currentEnemy;
+
+        var dist = Vector3.Distance(_currentEnemy.transform.position, transform.position);
+
+        foreach (var enemy in _enemiesInTriggerZone)
+        {
+            var newDist = Vector3.Distance(enemy.transform.position, transform.position);
+            if (dist > newDist)
+            {
+                enemyController = enemy;
+                dist = newDist;
+            }
+        }
+
+        return enemyController;
+    }
+
     private void Control()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -119,15 +152,9 @@ public sealed class PlayerController : CharacterController
 
         if (!IsWaitAnim)
         {
-            if (Input.GetAxisRaw("Fire1") == 1)
+            if (Input.GetButtonDown("Attack"))
             {
                 Attack();
-                
-            }
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                DialogueSystemController.Instance.CompleteDialogue("Quest");
             }
 
             if (Input.GetButtonDown("Interact") && IsCanInteract)
@@ -148,6 +175,11 @@ public sealed class PlayerController : CharacterController
             InteractebleNPC = null;
             _state = CharacterState.Free;
         }
+
+        if (_enemiesInTriggerZone.Count > 0)
+        {
+            _state = CharacterState.Fights;
+        }
     }    
 
     private void LockMouse()
@@ -160,5 +192,22 @@ public sealed class PlayerController : CharacterController
     {
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
+    }
+
+    protected override void OnTriggerEnter(Collider other)
+    {
+        if (other.TryGetComponent<EnemyController>(out var enemy))
+        {
+            _currentEnemy = enemy;
+            _enemiesInTriggerZone.Add(enemy);
+        }
+    }
+
+    protected override void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent<EnemyController>(out var enemy))
+        {
+            _enemiesInTriggerZone.Remove(enemy);
+        }
     }
 }
