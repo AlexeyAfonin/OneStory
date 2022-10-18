@@ -44,7 +44,6 @@ public sealed class PlayerController : CharacterController
     protected override void Start()
     {
         base.Start();
-        LockMouse();
 
         _controller = GetComponent<UCharacterController>();
 
@@ -58,10 +57,13 @@ public sealed class PlayerController : CharacterController
 
     protected override void Update()
     {
-        base.Update();
+        if (!GameContoller.Instance.IsGamePause)
+        {
+            base.Update();
 
-        Control();
-        CheckState();
+            Control();
+            CheckState();
+        }
     }
 
     protected override void FixedUpdate()
@@ -125,9 +127,12 @@ public sealed class PlayerController : CharacterController
 
     public override void TakeDamage(int damage)
     {
-        base.TakeDamage(damage);
-        healthbarFillSprite.fillAmount = (float)_health / _maxHealth;
-        _characterAnimator.PlayAnimation(CharacterAnimations.Hit);
+        if (!GameContoller.Instance.IsGamePause)
+        {
+            base.TakeDamage(damage);
+            healthbarFillSprite.fillAmount = (float)_health / _maxHealth;
+            _characterAnimator.PlayAnimation(CharacterAnimations.Hit);
+        }
     }
 
     public void EnableDialogueCamera()
@@ -161,9 +166,9 @@ public sealed class PlayerController : CharacterController
 
     private void Control()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetButtonDown("Cancel"))
         {
-            UnlockMouse();
+            GameContoller.Instance.PauseGame();
         }
 
         if (!IsWaitAnim)
@@ -197,18 +202,6 @@ public sealed class PlayerController : CharacterController
             _state = CharacterState.Fights;
         }
     }    
-
-    private void LockMouse()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
-
-    private void UnlockMouse()
-    {
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = true;
-    }
 
     protected override void OnTriggerEnter(Collider other)
     {

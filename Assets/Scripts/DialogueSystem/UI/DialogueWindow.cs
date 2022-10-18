@@ -33,7 +33,7 @@ namespace DialogueSystem.UI
 
         public override void Hide()
         {
-            base.Hide();
+            base.Hide();    
         }
     }
 }

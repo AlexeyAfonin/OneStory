@@ -8,8 +8,13 @@ using UnityEngine.UI;
 public class SettingsController : MonobehSingleton<SettingsController>
 {
     [SerializeField] private SettingsConfig config;
+    [Space(10f), Header("UI")]
+    [SerializeField] private GameObject windowPrefab;
+
+    private SettingsWindow _windowOnScene;
 
     public SettingsConfig Config => config;
+    public GameObject Window => windowPrefab;
 
     protected override void Awake()
     {
@@ -17,15 +22,22 @@ public class SettingsController : MonobehSingleton<SettingsController>
         DontDestroyOnLoad(this);
     }
 
-    public void ChangeValueMusic(int value)
+    public void ShowWindow(Canvas canvas)
     {
-        config.SettingsVariables.Music = value;
-        config.SaveSettings();
+        if (_windowOnScene == null)
+        {
+            InitWindow(canvas);
+        }
+        else
+        {
+            _windowOnScene.Show();
+        }
     }
 
-    public void ChangeValueSounds(int value)
+    private void InitWindow(Canvas canvas)
     {
-        config.SettingsVariables.Sounds = value;
-        config.SaveSettings();
+        var window = Instantiate(windowPrefab, canvas.transform);
+        _windowOnScene = window.GetComponent<SettingsWindow>();
+        _windowOnScene.Show();
     }
 }
