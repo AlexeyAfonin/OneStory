@@ -6748,6 +6748,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 411276727}
+  - component: {fileID: 411276728}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -6779,6 +6780,26 @@ RectTransform:
   m_AnchoredPosition: {x: -656, y: 445}
   m_SizeDelta: {x: 420, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &411276728
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411276726}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 242df7a6de3175e4ca984c9e35eb2755, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &418182127
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23530,7 +23551,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1272915262}
-  m_LocalRotation: {x: 0.3324073, y: 0.000000016227956, z: -0.0000000057195266, w: 0.943136}
+  m_LocalRotation: {x: 0.3324073, y: -0.000000016227958, z: 0.0000000057195284, w: 0.943136}
   m_LocalPosition: {x: 0, y: 2, z: -8.5}
   m_LocalScale: {x: 0.40000004, y: 0.40000004, z: 0.40000004}
   m_ConstrainProportionsScale: 0
@@ -25056,7 +25077,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1340708690}
-  m_LocalRotation: {x: 0.3324073, y: 0.000000016227956, z: -0.0000000057195266, w: 0.943136}
+  m_LocalRotation: {x: 0.3324073, y: -0.000000016227958, z: 0.000000005719528, w: 0.943136}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -39745,7 +39766,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCanvas: {fileID: 1590338222}
   pauseWindow: {fileID: 2141389155}
-  settingsWindow: {fileID: 0}
   continueButton: {fileID: 41816232}
   settingsButton: {fileID: 530306952}
   exitButton: {fileID: 297348408}

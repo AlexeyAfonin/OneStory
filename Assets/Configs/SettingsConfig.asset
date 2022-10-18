@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: SettingsConfig
   m_EditorClassIdentifier: 
   SettingsVariables:
-    Sounds: 50
-    Music: 50
+    Sounds: 32
+    Music: 81
     Sensitivity: 50
     ControllersKeys:
       Forward:
