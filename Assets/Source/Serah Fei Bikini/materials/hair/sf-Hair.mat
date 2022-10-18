@@ -20,16 +20,15 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 3050
+  m_CustomRenderQueue: 3038
   stringTagMap:
     MotionVector: User
     RenderType: Transparent
   disabledShaderPasses:
   - RayTracingPrepass
+  - MOTIONVECTORS
   - TransparentDepthPrepass
   - TransparentDepthPostpass
-  - TransparentBackface
-  - MOTIONVECTORS
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -372,9 +371,9 @@ Material:
     - _ATDistance: 1
     - _AddPrecomputedVelocity: 0
     - _AlbedoAffectEmissive: 0
-    - _AlphaClipThreshold: 0
-    - _AlphaClipThresholdDepthPostpass: 0.6
-    - _AlphaClipThresholdDepthPrepass: 0.9
+    - _AlphaClipThreshold: 0.242
+    - _AlphaClipThresholdDepthPostpass: 0.677
+    - _AlphaClipThresholdDepthPrepass: 0.871
     - _AlphaCutoff: 0.5
     - _AlphaCutoffEnable: 0
     - _AlphaCutoffPostpass: 0.5
@@ -384,18 +383,18 @@ Material:
     - _AlphaLevel: 0.29
     - _AlphaPower: 1
     - _AlphaSrcBlend: 1
-    - _AlphaThresholdShadow: 0.5
+    - _AlphaThresholdShadow: 0.635
     - _AlphaToMask: 0
     - _AlphaToMaskInspectorValue: 0
     - _Anisotropy: 0
     - _BaseIllumination: 0.15
-    - _BlendMode: 0
+    - _BlendMode: 4
     - _BumpPower: 0.476
     - _BumpScale: 1
     - _CoatMask: 0
     - _ConservativeDepthOffsetEnable: 0
     - _CullMode: 0
-    - _CullModeForward: 0
+    - _CullModeForward: 2
     - _Cutoff: 0.5
     - _DepthOffsetEnable: 0
     - _DesaturateBase: 0
@@ -583,7 +582,7 @@ Material:
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
     - _RefractionModel: 0
-    - _RenderQueueType: 3
+    - _RenderQueueType: 4
     - _RequireSplitLighting: 0
     - _SSRefractionProjectionModel: 0
     - _SSS: 0
@@ -668,11 +667,11 @@ Material:
     - _TranslucentEffect: 0
     - _TransmissionEnable: 1
     - _TransmissionRim: 0.2
-    - _TransparentBackfaceEnable: 0
+    - _TransparentBackfaceEnable: 1
     - _TransparentCullMode: 2
     - _TransparentDepthPostpassEnable: 0
     - _TransparentDepthPrepassEnable: 0
-    - _TransparentSortPriority: 50
+    - _TransparentSortPriority: 38
     - _TransparentWritingMotionVec: 1
     - _TransparentWritingVelocity: 0
     - _TransparentZWrite: 0
@@ -768,7 +767,7 @@ Material:
     - _UvTiling: {r: 1, g: 1, b: 0, a: 0}
     - _VariantColor1_GlossA: {r: 0.8897059, g: 0.1308391, b: 0.1308391, a: 0.516}
     - _Variant_Color2_GlossA: {r: 0, g: 0.1356491, b: 0.7867647, a: 0.516}
-    - _uvBaseST: {r: 1, g: 1, b: 0, a: 0}
+    - _uvBaseST: {r: 2.4, g: 7.92, b: 0.37, a: 0}
     - _uvSmoothnessST: {r: 20, g: 5, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &3880959847785934428

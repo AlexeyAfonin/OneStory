@@ -239,6 +239,14 @@ namespace DialogueSystem
             {
                 _npc.PlayAnimation(_animationName);
                 _animationName = "";
+
+                if(_currentDialogue.State == StateDialogue.Completed)
+                {
+                    foreach (var rigLayer in _npc.RigBuilder.layers)
+                    {
+                        rigLayer.active = true;
+                    }
+                }
             }
             _indexActiveReplica = 0;
             _npc = null;

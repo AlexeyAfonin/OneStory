@@ -3,10 +3,15 @@ using DialogueSystem.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using static OneStory.Core.Utils.Enums;
 
 public class NPCController : CharacterController
 {
+    [SerializeField] private RigBuilder rigBuilder;
+
+    public RigBuilder RigBuilder => rigBuilder;
+
     protected override void Awake()
     {
         base.Awake();
