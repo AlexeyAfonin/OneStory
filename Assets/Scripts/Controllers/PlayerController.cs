@@ -120,7 +120,7 @@ public sealed class PlayerController : CharacterController
     public override void TakeDamage(int damage)
     {
         base.TakeDamage(damage);
-        healthbarFillSprite.fillAmount = _health / _maxHealth;
+        healthbarFillSprite.fillAmount = (float)_health / _maxHealth;
         _characterAnimator.PlayAnimation(CharacterAnimations.Hit);
     }
 
