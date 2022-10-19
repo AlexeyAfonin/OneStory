@@ -53,17 +53,17 @@ public class NPCController : CharacterController
         {
             if (player.State == CharacterState.Interact)
             {
-                player.IsInteracting = true;
-
                 if (DialogueWindow.Instance.IsVisiable)
                 {
                     HelpWindow.Instance.Hide();
                     player.EnableDialogueCamera();
+                    player.IsInteracting = true;
                 }
                 else
                 {
                     HelpWindow.Instance.Show();
                     player.DisableDialogueCamera();
+                    player.IsInteracting = false;
                 }
             }
         }
@@ -74,9 +74,7 @@ public class NPCController : CharacterController
         if (other.TryGetComponent<PlayerController>(out var player))
         {
             HelpWindow.Instance.Hide();
-
             player.IsCanInteract = false;
-            player.IsInteracting = false;
             player.ActiveDialogue = null;
             player.InteractebleNPC = null;
             player.State = CharacterState.Free;
