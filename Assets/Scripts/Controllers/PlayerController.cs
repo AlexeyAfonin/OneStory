@@ -23,14 +23,9 @@ public sealed class PlayerController : CharacterController
 
     private UCharacterController _controller;
 
-    private bool _isMoving;
-
     private readonly float _turnSmoothTime = 0.1f;
     private float _turnSmoothVelocity;
     private float _targetAngle;
-
-    private List<EnemyController> _enemiesInTriggerZone = new List<EnemyController>();
-    private EnemyController _currentEnemy;
 
     public NPCController InteractebleNPC { get; set; }
 
@@ -62,13 +57,12 @@ public sealed class PlayerController : CharacterController
             base.Update();
 
             Control();
-            CheckState();
         }
     }
 
     protected override void FixedUpdate()
     {
-        if (!IsWaitAnim && !DialogueWindow.Instance.IsVisiable)
+        if (!IsWaitingEndAnimation && !IsInteracting)
         {
             Move();
         }
@@ -78,16 +72,16 @@ public sealed class PlayerController : CharacterController
     {
         _characterAnimator.PlayAnimation(CharacterAnimations.Attack);
 
-        if (_enemiesInTriggerZone.Count > 0)
+        if (triggerZone.CharactersInZone.Count > 0)
         {
-            StartCoroutine(IAttack());
+            StartCoroutine(IEAttack());
         }
     }
 
-    protected override IEnumerator IAttack()
+    public override IEnumerator IEAttack()
     {
         yield return new WaitForSecondsRealtime(0.5f);
-        GetNearestEnemy().TakeDamage(_damage);
+        triggerZone.GetNearCharacter().TakeDamage(_damage);
     }
 
     protected override void Move()
@@ -97,9 +91,9 @@ public sealed class PlayerController : CharacterController
 
         var direction = new Vector3(horizontal, 0, vertical).normalized;
 
-        _isMoving = direction.magnitude >= 0.1f;
+        IsMoving = direction.magnitude >= 0.1f;
 
-        if (_isMoving)
+        if (IsMoving)
         {
             _characterAnimator.PlayAnimation(CharacterAnimations.Walk);
             Rotate(direction);
@@ -145,25 +139,6 @@ public sealed class PlayerController : CharacterController
         _dialogueCamera.enabled = false;
     }
 
-    private EnemyController GetNearestEnemy()
-    {
-        EnemyController enemyController = _currentEnemy;
-
-        var dist = Vector3.Distance(_currentEnemy.transform.position, transform.position);
-
-        foreach (var enemy in _enemiesInTriggerZone)
-        {
-            var newDist = Vector3.Distance(enemy.transform.position, transform.position);
-            if (dist > newDist)
-            {
-                enemyController = enemy;
-                dist = newDist;
-            }
-        }
-
-        return enemyController;
-    }
-
     private void Control()
     {
         if (Input.GetButtonDown("Cancel"))
@@ -171,9 +146,9 @@ public sealed class PlayerController : CharacterController
             GameContoller.Instance.PauseGame();
         }
 
-        if (!IsWaitAnim)
+        if (!IsWaitingEndAnimation)
         {
-            if (Input.GetButtonDown("Attack"))
+            if (Input.GetButtonDown("Attack") && !IsAttacking && !IsInteracting)
             {
                 Attack();
             }
@@ -182,41 +157,10 @@ public sealed class PlayerController : CharacterController
             {
                 if (ActiveDialogue != null)
                 {
-                    _state = CharacterState.Interacts;
+                    State = CharacterState.Interact;
                     DialogueSystemController.Instance.Dialogue(ActiveDialogue, InteractebleNPC, this);
                 }
             }
-        }
-    }
-
-    private void CheckState()
-    {
-        if (!IsCanInteract && (_state == CharacterState.Interacts))
-        {
-            InteractebleNPC = null;
-            _state = CharacterState.Free;
-        }
-
-        if (_enemiesInTriggerZone.Count > 0)
-        {
-            _state = CharacterState.Fights;
-        }
-    }    
-
-    protected override void OnTriggerEnter(Collider other)
-    {
-        if (other.TryGetComponent<EnemyController>(out var enemy))
-        {
-            _currentEnemy = enemy;
-            _enemiesInTriggerZone.Add(enemy);
-        }
-    }
-
-    protected override void OnTriggerExit(Collider other)
-    {
-        if (other.TryGetComponent<EnemyController>(out var enemy))
-        {
-            _enemiesInTriggerZone.Remove(enemy);
         }
     }
 }

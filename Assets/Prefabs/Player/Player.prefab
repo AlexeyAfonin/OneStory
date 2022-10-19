@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 884589650405460564}
   - component: {fileID: 884589650405460574}
   - component: {fileID: 3262881390683647876}
-  - component: {fileID: 1220813813228041313}
   - component: {fileID: 884589650405460566}
   - component: {fileID: 3262881390683647879}
   m_Layer: 0
@@ -52,7 +51,7 @@ MonoBehaviour:
   config: {fileID: 11400000, guid: b410fe0000b64894593726707f1e0a81, type: 2}
   dialogue: {fileID: 0}
   animator: {fileID: 3429424199229835366}
-  TriggerZone: {fileID: 1220813813228041313}
+  triggerZone: {fileID: 6653827642659893314}
   healthbarFillSprite: {fileID: 0}
   dialogueCameraPosition: {fileID: 6653827643295758995}
 --- !u!114 &3262881390683647876
@@ -67,19 +66,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcc048c1b8b90ab44a5357e09ad12dd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!135 &1220813813228041313
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 884589650405460575}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 2
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!136 &884589650405460566
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -187,6 +173,18 @@ Animator:
     type: 3}
   m_PrefabInstance: {fileID: 6653827641758472638}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6653827642659893314 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1524279804, guid: da1203547328fdb41974e0b5334e799a,
+    type: 3}
+  m_PrefabInstance: {fileID: 6653827641758472638}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb4ab6899d4186e48bf36ec38043174c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &6653827643295758995 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1692476205, guid: da1203547328fdb41974e0b5334e799a,

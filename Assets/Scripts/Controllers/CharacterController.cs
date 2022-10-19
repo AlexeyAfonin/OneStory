@@ -16,10 +16,9 @@ public class CharacterController : MonoBehaviour, ICharacter
     [Header("Animator")]
     [SerializeField] protected Animator animator;
     [Header("Radiuses")]
-    [SerializeField] protected Collider TriggerZone;
+    [SerializeField] protected TriggerZone triggerZone;
 
     protected CharacterType _type;
-    protected CharacterState _state;
     protected string _name;
     protected int _health;
     protected int _maxHealth;
@@ -29,16 +28,20 @@ public class CharacterController : MonoBehaviour, ICharacter
     protected CharacterAnimator _characterAnimator;
 
     public CharacterType Type => _type;
-    public CharacterState State => _state;
     public string Name => _name;
     public int Health => _health;
     public int MaxHealth => _maxHealth;
     public int Damage => _damage;
     public float Speed => _speed;
 
-    public bool IsDead { get; protected set; }
-    public bool IsWaitAnim { get; set; }
+    public CharacterState State { get; set; }
+    public bool IsMoving { get; set; }
+    public bool IsDead { get; set; }
+    public bool IsAttacking { get; set; }
     public bool IsCanInteract { get; set; }
+    public bool IsInteracting { get; set; }
+    public bool IsWaitingEndAnimation { get; set; }
+
 
     protected virtual void Awake()
     {
@@ -73,7 +76,7 @@ public class CharacterController : MonoBehaviour, ICharacter
 
     protected virtual void Attack() { }
 
-    protected virtual IEnumerator IAttack() { return null; }
+    public virtual IEnumerator IEAttack() { return null; }
 
     protected virtual void Move() { }
 
@@ -84,7 +87,7 @@ public class CharacterController : MonoBehaviour, ICharacter
     protected virtual void Dead() 
     {
         enabled = false;
-        _state = CharacterState.Dead;
+        State = CharacterState.Dead;
     }
 
     public virtual void TakeDamage(int damage)

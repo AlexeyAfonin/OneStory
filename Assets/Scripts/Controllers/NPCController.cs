@@ -32,6 +32,8 @@ public class NPCController : CharacterController
         animator.Play(nameAnimation);
     }
 
+    public override void TakeDamage(int damage) { } //Ignore 
+
     protected override void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent<PlayerController>(out var player))
@@ -49,8 +51,10 @@ public class NPCController : CharacterController
     {
         if (other.TryGetComponent<PlayerController>(out var player))
         {
-            if (player.State == CharacterState.Interacts)
+            if (player.State == CharacterState.Interact)
             {
+                player.IsInteracting = true;
+
                 if (DialogueWindow.Instance.IsVisiable)
                 {
                     HelpWindow.Instance.Hide();
@@ -70,8 +74,12 @@ public class NPCController : CharacterController
         if (other.TryGetComponent<PlayerController>(out var player))
         {
             HelpWindow.Instance.Hide();
+
             player.IsCanInteract = false;
+            player.IsInteracting = false;
             player.ActiveDialogue = null;
+            player.InteractebleNPC = null;
+            player.State = CharacterState.Free;
 
             CameraController.Instance.SpeakersGroup.RemoveMember(transform);
         }

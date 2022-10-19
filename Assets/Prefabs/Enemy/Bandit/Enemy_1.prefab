@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 3830508155150966460}
   - component: {fileID: 3131218919890179186}
   - component: {fileID: 3131218919890179185}
-  - component: {fileID: 8346472343273883029}
+  - component: {fileID: 1595071129}
+  - component: {fileID: 1884645558}
   - component: {fileID: 3131218919890179191}
   - component: {fileID: 3131218919890179184}
-  - component: {fileID: 1595071129}
   m_Layer: 0
   m_Name: Enemy_1
   m_TagString: Untagged
@@ -29,15 +29,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3830508155150966457}
-  m_LocalRotation: {x: 0, y: 0.43302983, z: 0, w: 0.9013796}
-  m_LocalPosition: {x: -22.217, y: 0, z: -4.605}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.55, y: 0.55, z: 0.55}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8562092469249318539}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 51.32, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3131218919890179186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,58 +65,7 @@ MonoBehaviour:
   config: {fileID: 11400000, guid: ae5bc35687016604290834270fa92f58, type: 2}
   dialogue: {fileID: 0}
   animator: {fileID: 8614574922649939049}
-  TriggerZone: {fileID: 8346472343273883029}
-  dialogueCameraViewPosition: {fileID: 0}
-  moveTarget: {fileID: 0}
---- !u!135 &8346472343273883029
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3830508155150966457}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.6
-  m_Center: {x: 0, y: 1, z: 0}
---- !u!136 &3131218919890179191
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3830508155150966457}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.2
-  m_Height: 1
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.5, z: 0}
---- !u!195 &3131218919890179184
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3830508155150966457}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0.8
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
+  triggerZone: {fileID: 0}
 --- !u!114 &1595071129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,6 +82,55 @@ MonoBehaviour:
   amountRays: 30
   angle: 60
   offset: {x: 0, y: 0.9, z: 0}
+--- !u!65 &1884645558
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3830508155150966457}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.5, y: 0.21, z: 1}
+  m_Center: {x: 0, y: 0.1, z: 0.75}
+--- !u!136 &3131218919890179191
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3830508155150966457}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.25
+  m_Height: 1.85
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!195 &3131218919890179184
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3830508155150966457}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.25
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0.8
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1.85
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1001 &8564892397865800739
 PrefabInstance:
   m_ObjectHideFlags: 0

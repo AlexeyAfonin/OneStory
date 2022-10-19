@@ -9,24 +9,17 @@ using static OneStory.Core.Utils.Enums;
 [RequireComponent(typeof(EnemyVision), typeof(NavMeshAgent))]
 public sealed class EnemyController : CharacterController
 {
-    [SerializeField] private Transform moveTarget;
+    private bool _isCountedInQuest = true;
+    private bool _isWait = false;
 
     private NavMeshAgent _agent;
-
-    private bool _isMoving;
-    private bool _isCountedInQuest = true;
-
+    private Transform _moveTarget;
     private PlayerController _player;
-
-    public PlayerController Player => _player;
-
-    public bool IsCanAttack { get; set; } = true;
-    public bool IsCountedInQuest => _isCountedInQuest;
 
     public Transform MoveTarget
     {
-        get => moveTarget;
-        set => moveTarget = value;
+        get => _moveTarget;
+        set => _moveTarget = value;
     }
 
     protected override void Awake()
@@ -48,7 +41,7 @@ public sealed class EnemyController : CharacterController
 
     protected override void FixedUpdate()
     {
-        if (!IsWaitAnim)
+        if (!IsWaitingEndAnimation && !_isWait)
         {
             Move();
         }
@@ -56,12 +49,12 @@ public sealed class EnemyController : CharacterController
 
     protected override void Move()
     {
-        _isMoving = moveTarget != null;
+        IsMoving = _moveTarget != null;
 
-        if (_isMoving)
+        if (IsMoving)
         {
             _characterAnimator.PlayAnimation(CharacterAnimations.Walk);
-            _agent.SetDestination(moveTarget.position);
+            _agent.SetDestination(_moveTarget.position);
         }
         else
         {
@@ -72,27 +65,30 @@ public sealed class EnemyController : CharacterController
 
     protected override void Attack()
     {
-        if (!IsWaitAnim)
+        if (!IsWaitingEndAnimation && !_isWait)
         {
             _characterAnimator.PlayAnimation(CharacterAnimations.Attack, true);
+            StartCoroutine(IEAttack());
         }
     }
 
-    public IEnumerator IAttackPlayer()
+    public override IEnumerator IEAttack()
     {
-        yield return new WaitForSecondsRealtime(0.6f);
+        yield return new WaitForSecondsRealtime(0.5f);
 
-        if(_player != null && !IsDead)
+        if(_player != null && !IsDead && !_isWait && !IsWaitingEndAnimation)
         {
             _player.TakeDamage(_damage);
         }
+
+        StartCoroutine(IEWait(1.2f));
     }
 
     protected override void Dead()
     {
         _characterAnimator.PlayAnimation(CharacterAnimations.Dying);
         _agent = null;
-        if (IsCountedInQuest)
+        if (_isCountedInQuest)
         {
             CountInQuest(QuestsSystemController.Instance.ActiveQuest);
         }
@@ -104,6 +100,15 @@ public sealed class EnemyController : CharacterController
     {
         base.TakeDamage(damage);
         _characterAnimator.PlayAnimation(CharacterAnimations.Hit);
+
+        StartCoroutine(IEWait(1.7f));
+    }
+    
+    private IEnumerator IEWait(float seconds)
+    {
+        _isWait = true;
+        yield return new WaitForSecondsRealtime(seconds);
+        _isWait = false;
     }
 
     private void CountInQuest(QuestSO quest)
@@ -127,7 +132,7 @@ public sealed class EnemyController : CharacterController
     {
         if (other.TryGetComponent<PlayerController>(out var player))
         {
-            if (IsCanAttack)
+            if (!IsAttacking)
             {
                 Attack();
             }

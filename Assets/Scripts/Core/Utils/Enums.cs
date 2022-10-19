@@ -22,23 +22,8 @@ namespace OneStory.Core.Utils
         {
             Free = 0,
             Fights = 1,
-            Interacts = 2,
+            Interact = 2,
             Dead = 3,
-        }
-
-        public enum TypeTriggerZone
-        {
-            None = 0,
-            Interactable = 1,
-            Attack = 2,
-        }
-
-        public enum TypeEventTriggerZone
-        {
-            None = 0,
-            Enter = 1,
-            Stay = 2,
-            Exit = 3,
         }
     }
 }
