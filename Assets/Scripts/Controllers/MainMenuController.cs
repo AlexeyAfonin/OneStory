@@ -11,7 +11,7 @@ public class MainMenuController : MonobehSingleton<MainMenuController>
     public Canvas MainCanvas => mainCanvas;
 
     public void Play() =>
-        SceneManager.LoadSceneAsync(1);
+        SceneLoader.Instance.LoadScene("Game");
 
     public void Settings() =>
         SettingsController.Instance.ShowWindow(mainCanvas);
