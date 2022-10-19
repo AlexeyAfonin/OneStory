@@ -46,6 +46,7 @@ namespace Core.Utils
 			if (_instance != null && _instance != this)
 			{
 				Debug.LogWarningFormat("MonobehSingleton({0}) already created!", typeof(T));
+				Destroy(_instance.gameObject);
 			}
 			if (!_isInited)
 			{
