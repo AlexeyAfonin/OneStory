@@ -71,7 +71,7 @@ public sealed class PlayerController : CharacterController
     protected override void Attack()
     {
         _characterAnimator.PlayAnimation(CharacterAnimations.Attack);
-
+        audioSourceController.PlaySound(TypeSoundEffect.Attack);
         if (triggerZone.CharactersInZone.Count > 0)
         {
             StartCoroutine(IEAttack());
@@ -96,6 +96,7 @@ public sealed class PlayerController : CharacterController
         if (IsMoving)
         {
             _characterAnimator.PlayAnimation(CharacterAnimations.Walk);
+            audioSourceController.PlaySound(TypeSoundEffect.Walk);
             Rotate(direction);
             Vector3 moveDirection = Quaternion.Euler(0f, _targetAngle, 0f) * Vector3.forward;
             _controller.Move(moveDirection.normalized * Speed * Time.deltaTime);
@@ -103,6 +104,7 @@ public sealed class PlayerController : CharacterController
         else
         {
             _characterAnimator.PlayAnimation(CharacterAnimations.Idle);
+            audioSourceController.StopSound(TypeSoundEffect.Walk);
         }
     }
 
@@ -126,6 +128,7 @@ public sealed class PlayerController : CharacterController
             base.TakeDamage(damage);
             healthbarFillSprite.fillAmount = (float)_health / _maxHealth;
             _characterAnimator.PlayAnimation(CharacterAnimations.Hit);
+            audioSourceController.PlaySound(TypeSoundEffect.Hit);
         }
     }
 

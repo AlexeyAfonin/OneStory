@@ -7,16 +7,22 @@ using OneStory.Core.Utils;
 using static OneStory.Core.Utils.Enums;
 using DialogueSystem.SO;
 
-[RequireComponent(typeof(CharacterAnimator))]
+[RequireComponent(typeof(CharacterAnimator),typeof(CapsuleCollider))]
 public class CharacterController : MonoBehaviour, ICharacter
 {
     [Header("Configs")]
     [SerializeField] protected CharacterConfig config;
-    [SerializeField] protected DialogueContainerSO dialogue;    
+    [SerializeField] protected DialogueContainerSO dialogue;  
+    [Space(5f)]
     [Header("Animator")]
     [SerializeField] protected Animator animator;
+    [Space(5f)]
+    [Header("Sounds")]
+    [SerializeField] protected CharacterAudioSourcesContoller audioSourceController;
+    [Space(5f)]
     [Header("Radiuses")]
     [SerializeField] protected TriggerZone triggerZone;
+    [Space(10f)]
 
     protected CharacterType _type;
     protected string _name;

@@ -55,11 +55,13 @@ public sealed class EnemyController : CharacterController
         {
             _characterAnimator.PlayAnimation(CharacterAnimations.Walk);
             _agent.SetDestination(_moveTarget.position);
+            audioSourceController.PlaySound(TypeSoundEffect.Walk, true);
         }
         else
         {
             _characterAnimator.PlayAnimation(CharacterAnimations.Idle);
             _agent.SetDestination(transform.position);
+            audioSourceController.StopSound(TypeSoundEffect.Walk);
         }
     }
 
@@ -78,6 +80,7 @@ public sealed class EnemyController : CharacterController
 
         if(_player != null && !IsDead && !_isWait && !IsWaitingEndAnimation)
         {
+            audioSourceController.PlaySound(TypeSoundEffect.Attack);
             _player.TakeDamage(_damage);
         }
 
@@ -100,6 +103,7 @@ public sealed class EnemyController : CharacterController
     {
         base.TakeDamage(damage);
         _characterAnimator.PlayAnimation(CharacterAnimations.Hit);
+        audioSourceController.PlaySound(TypeSoundEffect.Hit);
 
         StartCoroutine(IEWait(1.7f));
     }
