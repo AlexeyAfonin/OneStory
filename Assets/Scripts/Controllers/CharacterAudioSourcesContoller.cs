@@ -13,6 +13,12 @@ public class CharacterAudioSourcesContoller : MonoBehaviour
     [SerializeField] protected AudioSource audioSourceAttack;
     [SerializeField] protected AudioSource audioSourceHit;
 
+    private void Start()
+    {
+        SoundsController.Instance.EffectsAudioSources.Add(audioSourceWalk);
+        SoundsController.Instance.EffectsAudioSources.Add(audioSourceAttack);
+        SoundsController.Instance.EffectsAudioSources.Add(audioSourceHit);
+    }
 
     public void PlaySound(TypeSoundEffect sound, bool loop = false)
     {
@@ -40,6 +46,7 @@ public class CharacterAudioSourcesContoller : MonoBehaviour
 
         audioSource.clip = audioClip;
         audioSource.loop = loop;
+        audioSource.volume = SettingsController.Instance.Config.SettingsVariables.Sounds / 100f;
         audioSource.Play();
     }
 

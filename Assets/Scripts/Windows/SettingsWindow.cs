@@ -26,10 +26,24 @@ public class SettingsWindow : BaseWindow<SettingsWindow>
 
     public override void Hide()
     {
+        ChangeSoundVolume();
+        ChangeMusicVolume();
+        base.Hide();
+    }
+
+    public void ChangeSoundVolume()
+    {
         _config = SettingsController.Instance.Config;
-        _config.SettingsVariables.Music = (int)musicSlider.value;
         _config.SettingsVariables.Sounds = (int)soundsSlider.value;
         _config.SaveSettings();
-        base.Hide();
+        SoundsController.Instance.ChangeSoundVolume();
+    }
+
+    public void ChangeMusicVolume()
+    {
+        _config = SettingsController.Instance.Config;
+        _config.SettingsVariables.Music = (int)musicSlider.value;
+        _config.SaveSettings();
+        SoundsController.Instance.ChangeSoundVolume();
     }
 }
