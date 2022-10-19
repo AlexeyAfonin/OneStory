@@ -52,7 +52,7 @@ public class GameContoller : MonobehSingleton<GameContoller>
         SettingsController.Instance.ShowWindow(mainCanvas);
     }
 
-    private void ExitInMainMenu()
+    public void ExitInMainMenu()
     {
         Time.timeScale = 1f;
         UnlockMouse();

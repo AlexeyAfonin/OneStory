@@ -119,6 +119,7 @@ public sealed class PlayerController : CharacterController
     {
         _characterAnimator.PlayAnimation(CharacterAnimations.Dying);
         base.Dead();
+        GameContoller.Instance.ExitInMainMenu();
     }
 
     public override void TakeDamage(int damage)
