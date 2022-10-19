@@ -13,7 +13,15 @@ public class SettingsController : MonobehSingleton<SettingsController>
 
     private SettingsWindow _windowOnScene;
 
-    public SettingsConfig Config => config;
+    public SettingsConfig Config
+    {
+        get
+        {
+            config.LoadSettings();
+            return config;
+        }
+    }
+
     public GameObject Window => windowPrefab;
 
     protected override void Awake()

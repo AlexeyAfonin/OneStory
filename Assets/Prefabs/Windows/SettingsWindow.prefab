@@ -424,7 +424,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3049273801897614850}
         m_TargetAssemblyTypeName: SettingsWindow, Assembly-CSharp
-        m_MethodName: ChangeVolume
+        m_MethodName: ChangeVolumeSounds
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -906,7 +906,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3049273801897614850}
         m_TargetAssemblyTypeName: SettingsWindow, Assembly-CSharp
-        m_MethodName: ChangeVolume
+        m_MethodName: ChangeVolumeMusic
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

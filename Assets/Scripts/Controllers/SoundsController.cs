@@ -11,11 +11,10 @@ public class SoundsController : MonobehSingleton<SoundsController>
 
     private void Start()
     {
-        ChangeSoundVolume();
-        ChangeMusicVolume();
+        ChangeVolume();
     }
 
-    public void ChangeSoundVolume()
+    public void ChangeVolume()
     {
         var settings = SettingsController.Instance.Config.SettingsVariables;
 
@@ -24,19 +23,14 @@ public class SoundsController : MonobehSingleton<SoundsController>
             BackgroundSound.volume = settings.Sounds / 100f;
         }
 
-        foreach (var effect in EffectsAudioSources)
-        {
-            effect.volume = settings.Sounds / 100f;
-        }
-    }
-
-    public void ChangeMusicVolume()
-    {
-        var settings = SettingsController.Instance.Config.SettingsVariables;
-
         if (BackgroundMusic != null)
         {
             BackgroundMusic.volume = settings.Music / 100f;
+        }
+
+        foreach (var effect in EffectsAudioSources)
+        {
+            effect.volume = settings.Sounds / 100f;
         }
     }
 }

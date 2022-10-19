@@ -10,40 +10,37 @@ public class SettingsWindow : BaseWindow<SettingsWindow>
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider soundsSlider;
 
-
-    private SettingsConfig _config;
-    private SettingsVariables _settings;
-
     public override void Show()
     {
         base.Show();
-        _config = SettingsController.Instance.Config;
-        _config.LoadSettings();
-        _settings = _config.SettingsVariables;
-        musicSlider.value = _settings.Music;
-        soundsSlider.value = _settings.Sounds;
+
+        var config = SettingsController.Instance.Config;
+        var settings = config.SettingsVariables;
+
+        musicSlider.value = settings.Music;
+        soundsSlider.value = settings.Sounds;
     }
 
     public override void Hide()
     {
-        ChangeSoundVolume();
-        ChangeMusicVolume();
+        ChangeVolumeSounds();
+        ChangeVolumeMusic();
         base.Hide();
     }
 
-    public void ChangeSoundVolume()
+    public void ChangeVolumeSounds()
     {
-        _config = SettingsController.Instance.Config;
-        _config.SettingsVariables.Sounds = (int)soundsSlider.value;
-        _config.SaveSettings();
-        SoundsController.Instance.ChangeSoundVolume();
+        var config = SettingsController.Instance.Config;
+        config.SettingsVariables.Sounds = (int)soundsSlider.value;
+        config.SaveSettings();
+        SoundsController.Instance.ChangeVolume();
     }
 
-    public void ChangeMusicVolume()
+    public void ChangeVolumeMusic()
     {
-        _config = SettingsController.Instance.Config;
-        _config.SettingsVariables.Music = (int)musicSlider.value;
-        _config.SaveSettings();
-        SoundsController.Instance.ChangeSoundVolume();
+        var config = SettingsController.Instance.Config;
+        config.SettingsVariables.Music = (int)musicSlider.value;
+        config.SaveSettings();
+        SoundsController.Instance.ChangeVolume();
     }
 }
